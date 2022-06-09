@@ -1,18 +1,34 @@
-import { Button, Group } from "@mantine/core";
+import { Button, Transition } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import { useState } from "react";
-import { ArrowBarLeft } from "tabler-icons-react";
+import { Calendar as CalendarIcon } from "tabler-icons-react";
 
 function SideBar() {
   const [value, setValue] = useState<Date | null>();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Group position="left">
-      <Calendar value={value} onChange={setValue} />
-      <Button radius="xl" variant="subtle" compact>
-        <ArrowBarLeft size={20} />
-      </Button>
-    </Group>
+    <div>
+      <div className="calendar">
+        <Transition mounted={isOpen} transition="slide-left">
+          {(styles) => (
+            <div style={styles}>
+              <Calendar value={value} onChange={setValue} />
+            </div>
+          )}
+        </Transition>
+      </div>
+      <div className="calendar-icon">
+        <Button
+          onClick={() => setIsOpen(!isOpen)}
+          radius="xl"
+          variant="subtle"
+          compact
+        >
+          <CalendarIcon size={20} />
+        </Button>
+      </div>
+    </div>
   );
 }
 
