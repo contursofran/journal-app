@@ -1,25 +1,42 @@
-import React from "react";
-import { Grid, Center } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
-import SideBar from "./components/SideBar";
+import React, { useState } from "react";
+import {
+  MantineProvider,
+  ColorSchemeProvider,
+  ColorScheme,
+  Stack,
+} from "@mantine/core";
+import Header from "./components/Header";
+import Calendar from "./components/Calendar";
 import Editor from "./components/Editor";
 
 function App() {
-  const { height, width } = useViewportSize();
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   return (
-    <div className="App">
-      <Center style={{ height, width }}>
-        <Grid align="center">
-          <Grid.Col span={4}>
-            <SideBar />
-          </Grid.Col>
-          <Grid.Col span={8}>
-            <Editor />
-          </Grid.Col>
-        </Grid>
-      </Center>
-    </div>
+    <ColorSchemeProvider
+      colorScheme={colorScheme}
+      toggleColorScheme={toggleColorScheme}
+    >
+      <MantineProvider
+        theme={{ colorScheme }}
+        withGlobalStyles
+        withNormalizeCSS
+      >
+        <Stack className="min-h-screen">
+          <Header />
+          <div className="flex justify-between flex-grow flex-nowrap">
+            <div className="flex flex-grow justify-center items-center">
+              <Calendar />
+              <div className="flex h-full justify-center  w-full px-20 py-16">
+                <Editor />
+              </div>
+            </div>
+          </div>
+        </Stack>
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
 }
 

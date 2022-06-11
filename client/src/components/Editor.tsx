@@ -6,7 +6,14 @@ const initialValue =
 
 function Editor() {
   const [value, onChange] = useState(initialValue);
-  return <RichTextEditor value={value} onChange={onChange} />;
+
+  return (
+    <RichTextEditor
+      className=" w-full h-full"
+      value={value}
+      onChange={onChange}
+    />
+  );
 }
 
 export default Editor;
