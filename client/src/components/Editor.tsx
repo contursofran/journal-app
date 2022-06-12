@@ -9,7 +9,8 @@ function Editor() {
 
   return (
     <RichTextEditor
-      className=" w-full h-full"
+      radius="md"
+      className=" w-full h-full "
       value={value}
       onChange={onChange}
     />

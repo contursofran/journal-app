@@ -1,17 +1,22 @@
 import { Transition } from "@mantine/core";
 import { Calendar as CalendarComponent } from "@mantine/dates";
-import { useState } from "react";
-import useStore from "../store";
+import useStore from "../store/store";
 
 function Calendar() {
-  const [value, setValue] = useState<Date | null>();
+  const value = useStore((state) => state.calendarValue);
   const isOpen = useStore((state) => state.isOpen);
+  const setCalendarValue = useStore((state) => state.setCalendarValue);
+
   return (
-    <div className="relative left-10 sm:max-w-[25%] xl:max-w-sm">
+    <div className="relative left-10 xl:max-w-[25%] 2xl:max-w-sm sm:max-w-xs max-w-[15%]">
       <Transition mounted={isOpen} transition="slide-down">
         {(styles) => (
           <div style={styles}>
-            <CalendarComponent fullWidth value={value} onChange={setValue} />
+            <CalendarComponent
+              fullWidth
+              value={value}
+              onChange={setCalendarValue}
+            />
           </div>
         )}
       </Transition>
