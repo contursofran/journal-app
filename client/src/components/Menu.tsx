@@ -12,15 +12,15 @@ import useStore from "../store/store";
 
 function Menu() {
   const theme = useMantineTheme();
-  const { accentColor, setAccentColor } = useStore((state) => state);
-
-  const swatches = Object.keys(theme.colors).map((color) => (
+  const accentThemes = ["red", "violet", "indigo", "cyan", "yellow"];
+  const { setAccentColor } = useStore((state) => state);
+  const swatches = accentThemes.map((color) => (
     <ColorSwatch
-      component="button"
-      size={25}
       key={color}
       color={theme.colors[color][6]}
       onClick={() => setAccentColor(color)}
+      size={20}
+      component="button"
     />
   ));
 
