@@ -6,8 +6,6 @@ const createCalendarSlice: StoreSlice<CalendarSlice> = (set, get) => ({
   calendarValue: new Date(),
   setCalendarValue: (value) => set(() => ({ calendarValue: value })),
   title: () => get().calendarValue,
-  accentColor: "blue",
-  setAccentColor: (color) => set(() => ({ accentColor: color })),
 });
 
 export default createCalendarSlice;

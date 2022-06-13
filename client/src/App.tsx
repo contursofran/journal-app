@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   MantineProvider,
   ColorSchemeProvider,
@@ -12,9 +11,7 @@ import useStore from "./store/store";
 
 function App() {
   const accentColor = useStore((state) => state.accentColor);
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
-  const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+  const { colorScheme, toggleColorScheme } = useStore((state) => state);
 
   return (
     <ColorSchemeProvider
