@@ -6,6 +6,8 @@ export type CalendarSlice = {
   calendarValue: Date;
   setCalendarValue: (value: Date) => void;
   title: () => Date;
+  accentColor: string;
+  setAccentColor: (color: string) => void;
 };
 
 export type StoreState = CalendarSlice;

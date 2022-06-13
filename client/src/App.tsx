@@ -8,8 +8,10 @@ import {
 import Header from "./components/Header";
 import Calendar from "./components/Calendar";
 import Editor from "./components/Editor";
+import useStore from "./store/store";
 
 function App() {
+  const accentColor = useStore((state) => state.accentColor);
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
@@ -20,7 +22,7 @@ function App() {
       toggleColorScheme={toggleColorScheme}
     >
       <MantineProvider
-        theme={{ colorScheme }}
+        theme={{ colorScheme, primaryColor: accentColor }}
         withGlobalStyles
         withNormalizeCSS
       >
