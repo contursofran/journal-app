@@ -1,5 +1,6 @@
 import { Calendar, Moon, Sun, Settings } from "tabler-icons-react";
 import { ActionIcon, Group, Title, useMantineColorScheme } from "@mantine/core";
+import Menu from "./Menu";
 import useStore from "../store/store";
 
 function Header() {
@@ -24,8 +25,8 @@ function Header() {
           <ActionIcon onClick={() => toggleColorScheme()} radius="xl">
             {colorScheme === "dark" ? <Sun size={23} /> : <Moon size={23} />}
           </ActionIcon>
-          <ActionIcon onClick={toggleIsOpen} radius="xl">
-            <Settings size={23} />
+          <ActionIcon radius="xl">
+            <Menu />
           </ActionIcon>
         </Group>
       </Group>
