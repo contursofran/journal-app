@@ -9,6 +9,7 @@ function Editor() {
 
   return (
     <RichTextEditor
+      data-testid="Editor"
       radius="md"
       className=" w-full h-full "
       value={value}

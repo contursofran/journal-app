@@ -1,9 +1,4 @@
-import {
-  MantineProvider,
-  ColorSchemeProvider,
-  ColorScheme,
-  Stack,
-} from "@mantine/core";
+import { MantineProvider, ColorSchemeProvider, Stack } from "@mantine/core";
 import Header from "./components/Header";
 import Calendar from "./components/Calendar";
 import Editor from "./components/Editor";

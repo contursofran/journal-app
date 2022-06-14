@@ -13,7 +13,10 @@ function Calendar() {
       : `${color.colors.dark[3]} !important`;
 
   return (
-    <div className="relative left-10 xl:max-w-[25%] 2xl:max-w-sm sm:max-w-xs max-w-[15%]">
+    <div
+      className="relative left-10 xl:max-w-[25%] 2xl:max-w-sm sm:max-w-xs max-w-[15%]"
+      data-testid="calendar"
+    >
       <Transition mounted={isOpen} transition="slide-down">
         {(styles) => (
           <div style={styles}>
