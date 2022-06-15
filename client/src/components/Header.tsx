@@ -21,7 +21,7 @@ function Header() {
               <Calendar size={23} />
             )}
           </ActionIcon>
-          <Title order={2} className="left-4 relative">
+          <Title order={2} className="relative left-4">
             {title}
           </Title>
         </Group>
