@@ -12,5 +12,5 @@
     "baseUrl": "src",
     "resolveJsonModule": true
   },
-  "include": ["src", "types.ts", "index.ts"]
+  "include": ["src", "src/types.ts", "src/index.ts"]
 }
