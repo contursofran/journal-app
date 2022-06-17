@@ -10,4 +10,4 @@ const createApplicationSlice: StoreSlice<ApplicationSlice> = (set, get) => ({
   setAccentColor: (color) => set(() => ({ accentColor: color })),
 });
 
-export default createApplicationSlice;
+export { createApplicationSlice };

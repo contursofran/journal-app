@@ -8,16 +8,20 @@ import { getNotes } from "./services/notesService";
 
 function App() {
   const accentColor = useStore((state) => state.accentColor);
-  const { colorScheme, toggleColorScheme } = useStore((state) => state);
+  const { colorScheme, toggleColorScheme, notes, setNotes } = useStore(
+    (state) => state
+  );
 
   useEffect(() => {
     const fetchNotes = async () => {
-      const notes = await getNotes();
-      console.log(notes);
+      const data = await getNotes();
+      setNotes(data);
     };
 
     fetchNotes();
   }, []);
+
+  console.log(notes);
 
   return (
     <ColorSchemeProvider

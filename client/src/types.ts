@@ -16,7 +16,12 @@ export type ApplicationSlice = {
   setAccentColor: (color: string) => void;
 };
 
-export type StoreState = CalendarSlice & ApplicationSlice;
+export type NotesSlice = {
+  notes: Note[];
+  setNotes: (notes: Note[]) => void;
+};
+
+export type StoreState = CalendarSlice & ApplicationSlice & NotesSlice;
 
 export type StoreSlice<T> = (
   set: SetState<StoreState>,

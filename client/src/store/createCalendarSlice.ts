@@ -8,4 +8,4 @@ const createCalendarSlice: StoreSlice<CalendarSlice> = (set, get) => ({
   title: () => get().calendarValue,
 });
 
-export default createCalendarSlice;
+export { createCalendarSlice };

@@ -1,5 +1,5 @@
 import { Note } from "../types";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { apiUrl } from "../constants";
 
 const getNotes = async (): Promise<Note[]> => {
