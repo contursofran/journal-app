@@ -1,7 +1,9 @@
 import express from "express";
 import notesRouter from "./routes/notes";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const PORT = 3001;
@@ -11,7 +13,7 @@ app.get("/ping", (_req, res) => {
   res.send("pong");
 });
 
-app.use("/notes", notesRouter);
+app.use("/api/notes", notesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

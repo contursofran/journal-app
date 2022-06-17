@@ -1,5 +1,5 @@
 export interface Note {
   id: number;
-  date: string;
+  date: Date;
   body: string;
 }

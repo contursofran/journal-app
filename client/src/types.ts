@@ -22,3 +22,9 @@ export type StoreSlice<T> = (
   set: SetState<StoreState>,
   get: GetState<StoreState>
 ) => T;
+
+export interface Note {
+  id: number;
+  date: Date;
+  body: string;
+}
