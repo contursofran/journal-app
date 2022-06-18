@@ -4,40 +4,41 @@ import { useEffect, useState } from "react";
 import useStore from "../store/store";
 
 function Calendar() {
-  const { calendarValue, setCalendarValue, isOpen, colorScheme, notes } =
-    useStore();
-  const color = useMantineTheme();
-  const weekendColor =
-    colorScheme === "dark"
-      ? `${color.colors.dark[0]} !important`
-      : `${color.colors.dark[3]} !important`;
+  const {
+    calendarValue,
+    setCalendarValue,
+    isOpen,
+    colorScheme,
+    notes,
+    accentColor,
+  } = useStore();
   const [dates, setdates] = useState<Date[]>([]);
   const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
+  const [calendarDayStyle, setCalendarDayStyle] = useState<any>({});
+  const color = useMantineTheme();
 
   useEffect(() => {
-    const datesArray = notes.map((note) => new Date(note.date)).sort();
+    let datesArray = notes.map((note) => new Date(new Date(note.date))).sort();
 
-    setdates(datesArray);
+    datesArray.map((date) => {
+      date.setDate(date.getDate() + 1);
+    });
 
-    const currentMonthDatesArray = dates.filter(
+    const currentMonthDatesArray = datesArray.filter(
       (date) => date.getMonth() === calendarValue.getMonth()
     );
 
     setCurrentMonthDates(currentMonthDatesArray);
+    setdates(datesArray);
   }, [notes]);
 
   const handleMonthChange = (month: Date) => {
     const currentMonthDatesArray = dates.filter(
       (date) => date.getMonth() === month.getMonth()
     );
-
+    //Sun Jun 12 2022 21:00:00 GMT-0300 (Argentina Standard Time)
     setCurrentMonthDates(currentMonthDatesArray);
   };
-
-  console.log(
-    "🚀 ~ file: Calendar.tsx ~ line 35 ~ handleMonthChange ~ currentMonthDatesArray",
-    currentMonthDates
-  );
 
   return (
     <div
@@ -52,9 +53,20 @@ function Calendar() {
               value={calendarValue}
               onMonthChange={(month) => handleMonthChange(month)}
               onChange={setCalendarValue}
+              dayStyle={(calendarDate) =>
+                currentMonthDates
+                  .map((date) => date.getDate())
+                  .includes(calendarDate.getDate())
+                  ? {
+                      color: accentColor,
+                      fontWeight: "bold",
+                    }
+                  : { color: "white" }
+              }
               styles={() => ({
-                weekend: {
-                  color: weekendColor,
+                selected: {
+                  backgroundColor: `${accentColor} !important`,
+                  borderRadius: "14%",
                 },
               })}
             />

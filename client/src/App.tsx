@@ -15,7 +15,6 @@ function App() {
       const data = await getNotes();
       setNotes(data);
     };
-
     fetchNotes();
   }, []);
 
@@ -25,7 +24,7 @@ function App() {
       toggleColorScheme={toggleColorScheme}
     >
       <MantineProvider
-        theme={{ colorScheme, primaryColor: accentColor }}
+        theme={{ colorScheme }}
         withGlobalStyles
         withNormalizeCSS
       >

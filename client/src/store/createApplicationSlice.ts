@@ -6,7 +6,7 @@ const createApplicationSlice: StoreSlice<ApplicationSlice> = (set, get) => ({
     set((state) => ({
       colorScheme: state.colorScheme === "dark" ? "light" : "dark",
     })),
-  accentColor: "blue",
+  accentColor: "#1971c2",
   setAccentColor: (color) => set(() => ({ accentColor: color })),
 });
 

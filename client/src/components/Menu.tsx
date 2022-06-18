@@ -1,13 +1,12 @@
 import {
   ActionIcon,
-  SegmentedControl,
   Menu as MenuComponent,
   ColorSwatch,
   useMantineTheme,
   Group,
   Divider,
 } from "@mantine/core";
-import { Check, Logout, Settings } from "tabler-icons-react";
+import { Logout, Settings } from "tabler-icons-react";
 import useStore from "../store/store";
 
 function Menu() {
@@ -18,8 +17,8 @@ function Menu() {
     <ColorSwatch
       key={color}
       data-testid={`${color}`}
-      color={theme.colors[color][6]}
-      onClick={() => setAccentColor(color)}
+      color={theme.colors[color][8]}
+      onClick={() => setAccentColor(theme.colors[color][8])}
       size={20}
       component="button"
     />
