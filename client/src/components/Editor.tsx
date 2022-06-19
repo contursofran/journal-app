@@ -1,19 +1,45 @@
-import { useState } from "react";
-import { RichTextEditor } from "@mantine/rte";
-
-const initialValue =
-  "<p>Your initial <b>html value</b> or an empty string to init editor without value</p>";
+import { useEffect, useRef, useState } from "react";
+import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
+import useStore from "../store/store";
 
 function Editor() {
-  const [value, onChange] = useState(initialValue);
+  const [value, setValue] = useState("");
+  const { calendarValue, notes, setNotes } = useStore();
+  const refEditor = useRef<EditorRef>(null);
 
+  useEffect(() => {
+    let fixDates = notes.map((note) => ({
+      ...note,
+      date: new Date(note.date),
+    }));
+
+    fixDates.map((note) => {
+      note.date.setDate(note.date.getDate() + 1);
+    });
+
+    const workingDate = fixDates.filter(
+      (note) => note.date.getDay() === calendarValue.getDay()
+    );
+
+    if (workingDate.length > 0) {
+      console.log(workingDate);
+      setValue(workingDate[0].body);
+      refEditor.current?.setEditorContents(
+        refEditor.current.getEditor(),
+        workingDate[0].body
+      );
+    }
+  }, [calendarValue]);
+
+  console.log(value);
   return (
     <RichTextEditor
       data-testid="Editor"
       radius="md"
-      className=" w-full h-full "
+      className=" h-full w-full "
       value={value}
-      onChange={onChange}
+      ref={refEditor}
+      onChange={setValue}
     />
   );
 }

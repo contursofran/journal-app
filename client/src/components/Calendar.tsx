@@ -1,22 +1,13 @@
-import { Transition, useMantineTheme } from "@mantine/core";
+import { Transition } from "@mantine/core";
 import { Calendar as CalendarComponent } from "@mantine/dates";
 import { useEffect, useState } from "react";
 import useStore from "../store/store";
 
 function Calendar() {
-  const {
-    calendarValue,
-    setCalendarValue,
-    isOpen,
-    colorScheme,
-    notes,
-    accentColor,
-  } = useStore();
+  const { calendarValue, setCalendarValue, isOpen, notes, accentColor } =
+    useStore();
   const [dates, setdates] = useState<Date[]>([]);
   const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
-  const [calendarDayStyle, setCalendarDayStyle] = useState<any>({});
-  const color = useMantineTheme();
-
   useEffect(() => {
     let datesArray = notes.map((note) => new Date(new Date(note.date))).sort();
 
@@ -36,7 +27,7 @@ function Calendar() {
     const currentMonthDatesArray = dates.filter(
       (date) => date.getMonth() === month.getMonth()
     );
-    //Sun Jun 12 2022 21:00:00 GMT-0300 (Argentina Standard Time)
+
     setCurrentMonthDates(currentMonthDatesArray);
   };
 
