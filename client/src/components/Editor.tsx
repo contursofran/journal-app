@@ -17,17 +17,25 @@ function Editor() {
       note.date.setDate(note.date.getDate() + 1);
     });
 
-    const workingDate = fixDates.filter(
-      (note) => note.date.getDay() === calendarValue.getDay()
+    const workingDay = fixDates.filter(
+      (note) => note.date.getDate() === calendarValue.getDate()
     );
 
+    const workingDate = workingDay.filter(
+      (note) => note.date.getMonth() === calendarValue.getMonth()
+    );
+
+    console.log(workingDate);
     if (workingDate.length > 0) {
-      console.log(workingDate);
+      console.log(workingDate[0].body);
       setValue(workingDate[0].body);
       refEditor.current?.setEditorContents(
         refEditor.current.getEditor(),
         workingDate[0].body
       );
+    } else {
+      setValue("");
+      refEditor.current?.setEditorContents(refEditor.current.getEditor(), "");
     }
   }, [calendarValue]);
 
