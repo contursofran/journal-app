@@ -8,28 +8,18 @@ function Editor() {
   const refEditor = useRef<EditorRef>(null);
 
   useEffect(() => {
-    let fixDates = notes.map((note) => ({
-      ...note,
-      date: new Date(note.date),
-    }));
-
-    fixDates.map((note) => {
-      note.date.setDate(note.date.getDate() + 1);
-    });
-
-    const workingDay = fixDates.filter(
-      (note) => note.date.getDate() === calendarValue.getDate()
+    const selectedDate = notes.filter(
+      (note) =>
+        note.date.getDate() === calendarValue.getDate() &&
+        note.date.getMonth() === calendarValue.getMonth()
     );
 
-    const workingDate = workingDay.filter(
-      (note) => note.date.getMonth() === calendarValue.getMonth()
-    );
+    if (selectedDate.length) {
+      setValue(selectedDate[0].body);
 
-    if (workingDate.length > 0) {
-      setValue(workingDate[0].body);
       refEditor.current?.setEditorContents(
         refEditor.current.getEditor(),
-        workingDate[0].body
+        selectedDate[0].body
       );
     } else {
       setValue("");

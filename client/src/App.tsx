@@ -7,13 +7,20 @@ import useStore from "./store/store";
 import { getNotes } from "./services/notesService";
 
 function App() {
-  const { colorScheme, accentColor, toggleColorScheme, notes, setNotes } =
-    useStore((state) => state);
+  const { colorScheme, toggleColorScheme, setNotes } = useStore(
+    (state) => state
+  );
 
   useEffect(() => {
     const fetchNotes = async () => {
       const data = await getNotes();
-      setNotes(data);
+
+      const fixData = data.map((note) => ({
+        ...note,
+        date: new Date(new Date(note.date).getTime() + 86400000), // adds 1 day to the date
+      }));
+
+      setNotes(fixData);
     };
     fetchNotes();
   }, []);

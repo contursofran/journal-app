@@ -8,12 +8,11 @@ function Calendar() {
     useStore();
   const [dates, setdates] = useState<Date[]>([]);
   const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
-  useEffect(() => {
-    let datesArray = notes.map((note) => new Date(new Date(note.date))).sort();
 
-    datesArray.map((date) => {
-      date.setDate(date.getDate() + 1);
-    });
+  useEffect(() => {
+    const datesArray = notes
+      .map((note) => new Date(new Date(note.date)))
+      .sort();
 
     const currentMonthDatesArray = datesArray.filter(
       (date) => date.getMonth() === calendarValue.getMonth()
@@ -24,11 +23,11 @@ function Calendar() {
   }, [notes]);
 
   const handleMonthChange = (month: Date) => {
-    const currentMonthDatesArray = dates.filter(
+    const MonthChangeDates = dates.filter(
       (date) => date.getMonth() === month.getMonth()
     );
 
-    setCurrentMonthDates(currentMonthDatesArray);
+    setCurrentMonthDates(MonthChangeDates);
   };
 
   return (
