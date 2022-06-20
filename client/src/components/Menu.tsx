@@ -15,6 +15,7 @@ function Menu() {
   const { setAccentColor } = useStore((state) => state);
   const swatches = accentThemes.map((color) => (
     <ColorSwatch
+      id={color}
       key={color}
       data-testid={`${color}`}
       color={theme.colors[color][8]}
@@ -29,7 +30,7 @@ function Menu() {
       <MenuComponent
         closeOnItemClick={false}
         control={
-          <ActionIcon data-testid="menu">
+          <ActionIcon id="settings" data-testid="menu">
             <Settings size={23} />
           </ActionIcon>
         }

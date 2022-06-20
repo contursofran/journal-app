@@ -14,7 +14,7 @@ function Header() {
     <div data-testid="Header" className="h-10 p-4 ">
       <Group className="h-full" position="apart" align="center">
         <Group position="left">
-          <ActionIcon onClick={toggleIsOpen} radius="xl">
+          <ActionIcon id="calendar-button" onClick={toggleIsOpen} radius="xl">
             {isCalendarOpen ? (
               <CalendarOff size={23} />
             ) : (
@@ -28,6 +28,7 @@ function Header() {
 
         <Group position="right">
           <ActionIcon
+            id="theme-toggle"
             data-testid="change-theme"
             onClick={() => toggleColorScheme()}
             radius="xl"

@@ -40,6 +40,7 @@ function Calendar() {
         {(styles) => (
           <div style={styles}>
             <CalendarComponent
+              id="calendar"
               fullWidth
               value={calendarValue}
               onMonthChange={(month) => handleMonthChange(month)}

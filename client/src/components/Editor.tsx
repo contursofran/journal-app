@@ -25,9 +25,7 @@ function Editor() {
       (note) => note.date.getMonth() === calendarValue.getMonth()
     );
 
-    console.log(workingDate);
     if (workingDate.length > 0) {
-      console.log(workingDate[0].body);
       setValue(workingDate[0].body);
       refEditor.current?.setEditorContents(
         refEditor.current.getEditor(),
@@ -39,7 +37,6 @@ function Editor() {
     }
   }, [calendarValue]);
 
-  console.log(value);
   return (
     <RichTextEditor
       data-testid="Editor"
