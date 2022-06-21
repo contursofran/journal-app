@@ -13,6 +13,7 @@ function Menu() {
   const theme = useMantineTheme();
   const accentThemes = ["red", "violet", "indigo", "cyan", "yellow"];
   const { setAccentColor } = useStore((state) => state);
+
   const swatches = accentThemes.map((color) => (
     <ColorSwatch
       id={color}

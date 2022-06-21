@@ -4,8 +4,13 @@ import { useEffect, useState } from "react";
 import useStore from "../store/store";
 
 function Calendar() {
-  const { calendarValue, setCalendarValue, isOpen, notes, accentColor } =
-    useStore();
+  const {
+    calendarValue,
+    setCalendarValue,
+    isCalendarOpen,
+    notes,
+    accentColor,
+  } = useStore();
   const [dates, setdates] = useState<Date[]>([]);
   const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
 
@@ -35,7 +40,7 @@ function Calendar() {
       className="relative left-10 max-w-[15%] sm:max-w-xs xl:max-w-[25%] 2xl:max-w-sm"
       data-testid="calendar"
     >
-      <Transition mounted={isOpen} transition="slide-down">
+      <Transition mounted={isCalendarOpen} transition="slide-down">
         {(styles) => (
           <div style={styles}>
             <CalendarComponent

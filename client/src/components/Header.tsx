@@ -6,15 +6,18 @@ import useStore from "../store/store";
 function Header() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
-  const toggleIsOpen = useStore((state) => state.toggleIsOpen);
-  const isCalendarOpen = useStore((state) => state.isOpen);
+  const { toggleIsCalendarOpen, isCalendarOpen } = useStore();
   const title = useStore((state) => state.title().toDateString().slice(4));
 
   return (
     <div data-testid="Header" className="h-10 p-4 ">
       <Group className="h-full" position="apart" align="center">
         <Group position="left">
-          <ActionIcon id="calendar-button" onClick={toggleIsOpen} radius="xl">
+          <ActionIcon
+            id="calendar-button"
+            onClick={toggleIsCalendarOpen}
+            radius="xl"
+          >
             {isCalendarOpen ? (
               <CalendarOff size={23} />
             ) : (

@@ -2,8 +2,8 @@ import { SetState, GetState } from "zustand";
 import { ColorScheme } from "@mantine/core";
 
 export type CalendarSlice = {
-  isOpen: boolean;
-  toggleIsOpen: () => void;
+  isCalendarOpen: boolean;
+  toggleIsCalendarOpen: () => void;
   calendarValue: Date;
   setCalendarValue: (value: Date) => void;
   title: () => Date;
