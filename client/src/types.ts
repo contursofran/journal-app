@@ -14,6 +14,8 @@ export type ApplicationSlice = {
   toggleColorScheme: () => void;
   accentColor: string;
   setAccentColor: (color: string) => void;
+  status: string;
+  setStatus: (status: string) => void;
 };
 
 export type NotesSlice = {

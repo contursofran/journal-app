@@ -1,6 +1,7 @@
 import { MantineProvider, ColorSchemeProvider, Stack } from "@mantine/core";
 import { useEffect } from "react";
 import Header from "./components/Header";
+import { Footer } from "./components/Footer";
 import Calendar from "./components/Calendar";
 import Editor from "./components/Editor";
 import useStore from "./store/store";
@@ -45,6 +46,7 @@ function App() {
               </div>
             </div>
           </div>
+          <Footer />
         </Stack>
       </MantineProvider>
     </ColorSchemeProvider>

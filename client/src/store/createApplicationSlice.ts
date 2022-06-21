@@ -8,6 +8,8 @@ const createApplicationSlice: StoreSlice<ApplicationSlice> = (set, get) => ({
     })),
   accentColor: "#1971c2",
   setAccentColor: (color) => set(() => ({ accentColor: color })),
+  status: "saving",
+  setStatus: (status) => set(() => ({ status })),
 });
 
 export { createApplicationSlice };
