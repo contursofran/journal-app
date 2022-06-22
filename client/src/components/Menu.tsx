@@ -12,7 +12,10 @@ import useStore from "../store/store";
 function Menu() {
   const theme = useMantineTheme();
   const accentThemes = ["red", "violet", "indigo", "cyan", "yellow"];
-  const { setAccentColor } = useStore((state) => state);
+
+  const setAccentColor = (color: string) => {
+    useStore.setState({ accentColor: color });
+  };
 
   const swatches = accentThemes.map((color) => (
     <ColorSwatch

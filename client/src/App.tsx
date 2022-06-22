@@ -24,7 +24,7 @@ function App() {
       setNotes(fixData);
     };
     fetchNotes();
-  }, []);
+  }, [setNotes]);
 
   return (
     <ColorSchemeProvider

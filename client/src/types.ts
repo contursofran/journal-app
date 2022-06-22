@@ -3,17 +3,13 @@ import { ColorScheme } from "@mantine/core";
 
 export type CalendarSlice = {
   isCalendarOpen: boolean;
-  toggleIsCalendarOpen: () => void;
   calendarValue: Date;
-  setCalendarValue: (value: Date) => void;
-  title: () => Date;
 };
 
 export type ApplicationSlice = {
   colorScheme: ColorScheme;
   toggleColorScheme: () => void;
   accentColor: string;
-  setAccentColor: (color: string) => void;
   status: string;
   setStatus: (status: string) => void;
 };

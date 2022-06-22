@@ -25,7 +25,7 @@ function Editor() {
       setValue("");
       refEditor.current?.setEditorContents(refEditor.current.getEditor(), "");
     }
-  }, [calendarValue]);
+  }, [calendarValue, notes]);
 
   return (
     <RichTextEditor

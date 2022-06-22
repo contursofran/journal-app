@@ -1,18 +1,17 @@
-import { Transition } from "@mantine/core";
+import { Transition, useMantineTheme } from "@mantine/core";
 import { Calendar as CalendarComponent } from "@mantine/dates";
 import { useEffect, useState } from "react";
 import useStore from "../store/store";
 
 function Calendar() {
-  const {
-    calendarValue,
-    setCalendarValue,
-    isCalendarOpen,
-    notes,
-    accentColor,
-  } = useStore();
+  const { calendarValue, isCalendarOpen, notes, accentColor } = useStore();
   const [dates, setdates] = useState<Date[]>([]);
   const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
+  const theme = useMantineTheme();
+
+  const setCalendarValue = (value: Date) => {
+    useStore.setState({ calendarValue: value });
+  };
 
   useEffect(() => {
     const datesArray = notes
@@ -25,7 +24,7 @@ function Calendar() {
 
     setCurrentMonthDates(currentMonthDatesArray);
     setdates(datesArray);
-  }, [notes]);
+  }, [notes, calendarValue]);
 
   const handleMonthChange = (month: Date) => {
     const MonthChangeDates = dates.filter(
@@ -33,6 +32,17 @@ function Calendar() {
     );
 
     setCurrentMonthDates(MonthChangeDates);
+  };
+
+  const fontColor = () => {
+    switch (theme.colorScheme) {
+      case "light":
+        return "#000";
+      case "dark":
+        return "#fff";
+      default:
+        return "#fff";
+    }
   };
 
   return (
@@ -48,7 +58,7 @@ function Calendar() {
               fullWidth
               value={calendarValue}
               onMonthChange={(month) => handleMonthChange(month)}
-              onChange={setCalendarValue}
+              onChange={(value: Date) => setCalendarValue(value)}
               dayStyle={(calendarDate) =>
                 currentMonthDates
                   .map((date) => date.getDate())
@@ -57,7 +67,7 @@ function Calendar() {
                       color: accentColor,
                       fontWeight: "bold",
                     }
-                  : { color: "white" }
+                  : { color: fontColor() }
               }
               styles={() => ({
                 selected: {
