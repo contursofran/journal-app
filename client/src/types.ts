@@ -7,11 +7,11 @@ export type CalendarSlice = {
 };
 
 export type ApplicationSlice = {
-  colorScheme: ColorScheme;
-  toggleColorScheme: () => void;
   accentColor: string;
   status: string;
   setStatus: (status: string) => void;
+  noteModified: boolean;
+  setNoteModified: (noteModified: boolean) => void;
 };
 
 export type NotesSlice = {

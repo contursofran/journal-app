@@ -3,8 +3,12 @@ import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
 import useStore from "../store/store";
 
 function Editor() {
-  const [value, setValue] = useState("");
-  const { calendarValue, notes, setNotes } = useStore();
+  const [editorValue, setEditorValue] = useState("");
+
+  const calendarValue = useStore((state) => state.calendarValue);
+  const notes = useStore((state) => state.notes);
+  const setNoteModified = useStore((state) => state.setNoteModified);
+
   const refEditor = useRef<EditorRef>(null);
 
   useEffect(() => {
@@ -15,26 +19,34 @@ function Editor() {
     );
 
     if (selectedDate.length) {
-      setValue(selectedDate[0].body);
+      setEditorValue(selectedDate[0].body);
 
       refEditor.current?.setEditorContents(
         refEditor.current.getEditor(),
         selectedDate[0].body
       );
     } else {
-      setValue("");
+      setEditorValue("");
       refEditor.current?.setEditorContents(refEditor.current.getEditor(), "");
     }
   }, [calendarValue, notes]);
+
+  const handleChange = (text: string) => {
+    setEditorValue(text);
+
+    if (refEditor.current?.getEditor().hasFocus()) {
+      setNoteModified(true);
+    }
+  };
 
   return (
     <RichTextEditor
       data-testid="Editor"
       radius="md"
       className=" h-full w-full "
-      value={value}
+      value={editorValue}
       ref={refEditor}
-      onChange={setValue}
+      onChange={(text) => handleChange(text)}
     />
   );
 }

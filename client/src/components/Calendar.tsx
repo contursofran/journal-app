@@ -4,13 +4,19 @@ import { useEffect, useState } from "react";
 import useStore from "../store/store";
 
 function Calendar() {
-  const { calendarValue, isCalendarOpen, notes, accentColor } = useStore();
+  const accentColor = useStore((state) => state.accentColor);
+  const calendarValue = useStore((state) => state.calendarValue);
+  const isCalendarOpen = useStore((state) => state.isCalendarOpen);
+  const notes = useStore((state) => state.notes);
+  const setNoteModified = useStore((state) => state.setNoteModified);
+
   const [dates, setdates] = useState<Date[]>([]);
   const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
   const theme = useMantineTheme();
 
   const setCalendarValue = (value: Date) => {
     useStore.setState({ calendarValue: value });
+    setNoteModified(false);
   };
 
   useEffect(() => {

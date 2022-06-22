@@ -1,5 +1,10 @@
-import { MantineProvider, ColorSchemeProvider, Stack } from "@mantine/core";
-import { useEffect } from "react";
+import {
+  MantineProvider,
+  ColorSchemeProvider,
+  Stack,
+  ColorScheme,
+} from "@mantine/core";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import { Footer } from "./components/Footer";
 import Calendar from "./components/Calendar";
@@ -8,9 +13,12 @@ import useStore from "./store/store";
 import { getNotes } from "./services/notesService";
 
 function App() {
-  const { colorScheme, toggleColorScheme, setNotes } = useStore(
-    (state) => state
-  );
+  const setNotes = useStore((state) => state.setNotes);
+
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
+  const toggleColorScheme = () => {
+    setColorScheme(colorScheme === "dark" ? "light" : "dark");
+  };
 
   useEffect(() => {
     const fetchNotes = async () => {

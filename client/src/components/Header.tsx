@@ -5,7 +5,8 @@ import useStore from "../store/store";
 
 function Header() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const { isCalendarOpen, calendarValue } = useStore();
+  const isCalendarOpen = useStore((state) => state.isCalendarOpen);
+  const calendarValue = useStore((state) => state.calendarValue);
   const title = calendarValue.toDateString().slice(4);
 
   const toggleIsCalendarOpen = () => {
