@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
+import { useIdle } from "@mantine/hooks";
 import useStore from "../store/store";
 
 function Editor() {
@@ -8,8 +9,11 @@ function Editor() {
   const calendarValue = useStore((state) => state.calendarValue);
   const notes = useStore((state) => state.notes);
   const setNoteModified = useStore((state) => state.setNoteModified);
+  const noteModified = useStore((state) => state.noteModified);
+  const setStatus = useStore((state) => state.setStatus);
 
   const refEditor = useRef<EditorRef>(null);
+  const idle = useIdle(2000, { events: ["keypress"] });
 
   useEffect(() => {
     const selectedDate = notes.filter(
@@ -38,6 +42,16 @@ function Editor() {
       setNoteModified(true);
     }
   };
+
+  useEffect(() => {
+    if (idle && noteModified) {
+      setStatus("saving");
+
+      setTimeout(() => {
+        setStatus("saved");
+      }, 3000);
+    }
+  }, [idle, noteModified, setStatus]);
 
   return (
     <RichTextEditor
