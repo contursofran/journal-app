@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
 import { useIdle } from "@mantine/hooks";
 import useStore from "../store/store";
+import { updateNote, createNote } from "../services/notesService";
 
 function Editor() {
   const [editorValue, setEditorValue] = useState("");
@@ -42,16 +43,34 @@ function Editor() {
       setNoteModified(true);
     }
   };
-
+  console.log(notes);
   useEffect(() => {
     if (idle && noteModified) {
       setStatus("saving");
 
       setTimeout(() => {
+        const noteToSave = notes.find(
+          (note) =>
+            note.date.getDate() === calendarValue.getDate() &&
+            note.date.getMonth() === calendarValue.getMonth()
+        );
+
+        const note = {
+          date: noteToSave ? noteToSave.date : calendarValue,
+          body: editorValue,
+          id: noteToSave ? noteToSave.id : notes.length + 1,
+        };
+
+        if (noteToSave) {
+          updateNote(note);
+        } else {
+          createNote(note);
+        }
+
         setStatus("saved");
       }, 3000);
     }
-  }, [idle, noteModified, setStatus]);
+  }, [idle, noteModified, notes, calendarValue, editorValue, setStatus]);
 
   return (
     <RichTextEditor

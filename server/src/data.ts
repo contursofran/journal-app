@@ -8,7 +8,7 @@ const notes = [
   },
   {
     id: 2,
-    date: new Date(),
+    date: new Date("2022-06-16"),
     body: `<h1>Test</h1>
     
     Lorium

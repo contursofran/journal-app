@@ -9,4 +9,10 @@ router.get("/", (_req, res) => {
   res.json(notes);
 });
 
+router.put("/:id", (req, res) => {
+  const note = notesService.updateNote(req.body);
+
+  res.json(note);
+});
+
 export default router;
