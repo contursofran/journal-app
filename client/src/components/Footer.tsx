@@ -1,4 +1,4 @@
-import { Group, Loader } from "@mantine/core";
+import { Group, Loader, Tooltip } from "@mantine/core";
 
 import { Check } from "tabler-icons-react";
 import useStore from "../store/store";
@@ -10,9 +10,17 @@ function Footer() {
   const statusCase = () => {
     switch (status) {
       case "saving":
-        return <Loader size="sm" color={accentColor} />;
+        return (
+          <Tooltip label="Saving..." withArrow>
+            <Loader size="sm" color={accentColor} />
+          </Tooltip>
+        );
       case "saved":
-        return <Check size={23} color={accentColor} />;
+        return (
+          <Tooltip label="Saved" withArrow position="left">
+            <Check size={23} color={accentColor} />
+          </Tooltip>
+        );
       default:
         return null;
     }
