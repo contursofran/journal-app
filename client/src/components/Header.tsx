@@ -18,9 +18,9 @@ function Header() {
   };
 
   return (
-    <div data-testid="Header" className="h-10 p-4 ">
+    <div data-testid="Header">
       <Group className="h-full" position="apart" align="center">
-        <Group position="left">
+        <Group position="left" align="center">
           <ActionIcon
             id="calendar-button"
             onClick={toggleIsCalendarOpen}
@@ -32,7 +32,7 @@ function Header() {
               <Calendar size={iconSize} />
             )}
           </ActionIcon>
-          <Title order={fontSize} className="relative left-4">
+          <Title order={fontSize} className="relative left-1 sm:left-4">
             {title}
           </Title>
         </Group>

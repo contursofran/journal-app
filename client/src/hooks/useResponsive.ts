@@ -13,7 +13,7 @@ function useResponsive() {
 
   useEffect(() => {
     if (isMobile) {
-      setIconSize(18);
+      setIconSize(20);
       setFontSize(4);
       setSize("xs");
     } else if (isTablet) {
