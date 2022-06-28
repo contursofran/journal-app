@@ -2,11 +2,15 @@ import { Calendar, Moon, Sun, CalendarOff } from "tabler-icons-react";
 import { ActionIcon, Group, Title, useMantineColorScheme } from "@mantine/core";
 import Menu from "./Menu";
 import useStore from "../store/store";
+import { useResponsive } from "../hooks/useResponsive";
 
 function Header() {
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const isCalendarOpen = useStore((state) => state.isCalendarOpen);
   const calendarValue = useStore((state) => state.calendarValue);
+
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const { fontSize, iconSize } = useResponsive();
+
   const title = calendarValue.toDateString().slice(4);
 
   const toggleIsCalendarOpen = () => {
@@ -23,12 +27,12 @@ function Header() {
             radius="xl"
           >
             {isCalendarOpen ? (
-              <CalendarOff size={23} />
+              <CalendarOff size={iconSize} />
             ) : (
-              <Calendar size={23} />
+              <Calendar size={iconSize} />
             )}
           </ActionIcon>
-          <Title order={2} className="relative left-4">
+          <Title order={fontSize} className="relative left-4">
             {title}
           </Title>
         </Group>
@@ -40,7 +44,11 @@ function Header() {
             onClick={() => toggleColorScheme()}
             radius="xl"
           >
-            {colorScheme === "dark" ? <Sun size={23} /> : <Moon size={23} />}
+            {colorScheme === "dark" ? (
+              <Sun size={iconSize} />
+            ) : (
+              <Moon size={iconSize} />
+            )}
           </ActionIcon>
           <Menu />
         </Group>

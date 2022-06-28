@@ -8,10 +8,12 @@ import {
 } from "@mantine/core";
 import { Logout, Settings } from "tabler-icons-react";
 import useStore from "../store/store";
+import { useResponsive } from "../hooks/useResponsive";
 
 function Menu() {
   const theme = useMantineTheme();
   const accentThemes = ["red", "violet", "indigo", "cyan", "yellow"];
+  const { iconSize } = useResponsive();
 
   const setAccentColor = (color: string) => {
     useStore.setState({ accentColor: color });
@@ -35,7 +37,7 @@ function Menu() {
         closeOnItemClick={false}
         control={
           <ActionIcon id="settings" data-testid="menu">
-            <Settings size={23} />
+            <Settings size={iconSize} />
           </ActionIcon>
         }
       >

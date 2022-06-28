@@ -1,6 +1,7 @@
 import { Transition, useMantineTheme } from "@mantine/core";
 import { Calendar as CalendarComponent } from "@mantine/dates";
 import { useEffect, useState } from "react";
+import { useResponsive } from "../hooks/useResponsive";
 import useStore from "../store/store";
 
 function Calendar() {
@@ -13,6 +14,7 @@ function Calendar() {
   const [dates, setdates] = useState<Date[]>([]);
   const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
   const theme = useMantineTheme();
+  const { size } = useResponsive();
 
   const setCalendarValue = (value: Date) => {
     useStore.setState({ calendarValue: value });
@@ -52,40 +54,37 @@ function Calendar() {
   };
 
   return (
-    <div
-      className="relative left-10 max-w-[15%] sm:max-w-xs xl:max-w-[25%] 2xl:max-w-sm"
-      data-testid="calendar"
-    >
-      <Transition mounted={isCalendarOpen} transition="slide-down">
-        {(styles) => (
-          <div style={styles}>
-            <CalendarComponent
-              id="calendar"
-              fullWidth
-              value={calendarValue}
-              onMonthChange={(month) => handleMonthChange(month)}
-              onChange={(value: Date) => setCalendarValue(value)}
-              dayStyle={(calendarDate) =>
-                currentMonthDates
-                  .map((date) => date.getDate())
-                  .includes(calendarDate.getDate())
-                  ? {
-                      color: accentColor,
-                      fontWeight: "bold",
-                    }
-                  : { color: fontColor() }
-              }
-              styles={() => ({
-                selected: {
-                  backgroundColor: `${accentColor} !important`,
-                  borderRadius: "14%",
-                },
-              })}
-            />
-          </div>
-        )}
-      </Transition>
-    </div>
+    <Transition mounted={isCalendarOpen} transition="slide-down">
+      {(styles) => (
+        <div style={styles}>
+          <CalendarComponent
+            size={size}
+            id="calendar"
+            data-testid="calendar"
+            fullWidth
+            value={calendarValue}
+            onMonthChange={(month) => handleMonthChange(month)}
+            onChange={(value: Date) => setCalendarValue(value)}
+            dayStyle={(calendarDate) =>
+              currentMonthDates
+                .map((date) => date.getDate())
+                .includes(calendarDate.getDate())
+                ? {
+                    color: accentColor,
+                    fontWeight: "bold",
+                  }
+                : { color: fontColor() }
+            }
+            styles={() => ({
+              selected: {
+                backgroundColor: `${accentColor} !important`,
+                borderRadius: "14%",
+              },
+            })}
+          />
+        </div>
+      )}
+    </Transition>
   );
 }
 

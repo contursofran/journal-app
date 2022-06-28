@@ -43,7 +43,7 @@ function Editor() {
       setNoteModified(true);
     }
   };
-  console.log(notes);
+
   useEffect(() => {
     if (idle && noteModified) {
       setStatus("saving");

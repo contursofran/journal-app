@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Note } from "../types";
-import { apiUrl } from "../constants";
+import { apiUrl } from "../utils/constants";
 
 const getNotes = async (): Promise<Note[]> => {
   try {
