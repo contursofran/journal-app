@@ -32,27 +32,25 @@ function Menu() {
   ));
 
   return (
-    <div>
-      <MenuComponent
-        closeOnItemClick={false}
-        control={
-          <ActionIcon id="settings" data-testid="menu">
-            <Settings size={iconSize} />
-          </ActionIcon>
-        }
-      >
-        <MenuComponent.Label>Accent Color</MenuComponent.Label>
+    <MenuComponent
+      closeOnItemClick={false}
+      control={
+        <ActionIcon id="settings" data-testid="menu">
+          <Settings size={iconSize} />
+        </ActionIcon>
+      }
+    >
+      <MenuComponent.Label>Accent Color</MenuComponent.Label>
 
-        <Group className="p-2" position="center" align="center">
-          {swatches}
-        </Group>
+      <Group className="p-2" position="center" align="center">
+        {swatches}
+      </Group>
 
-        <Divider />
-        <MenuComponent.Item color="red" icon={<Logout size={17} />}>
-          Logout
-        </MenuComponent.Item>
-      </MenuComponent>
-    </div>
+      <Divider />
+      <MenuComponent.Item color="red" icon={<Logout size={17} />}>
+        Logout
+      </MenuComponent.Item>
+    </MenuComponent>
   );
 }
 

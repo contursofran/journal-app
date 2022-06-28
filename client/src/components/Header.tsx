@@ -37,7 +37,7 @@ function Header() {
           </Title>
         </Group>
 
-        <Group position="right">
+        <Group position="right" align="center">
           <ActionIcon
             id="theme-toggle"
             data-testid="change-theme"
