@@ -1,7 +1,6 @@
 import {
   MantineProvider,
   ColorSchemeProvider,
-  Stack,
   ColorScheme,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
@@ -43,20 +42,20 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Stack className="min-h-screen">
-          <Header />
-          <div className="flex flex-grow flex-nowrap justify-between">
-            <div className="flex flex-grow items-center justify-center  ">
-              <div className="relative left-10 max-w-[20%]">
-                <Calendar />
-              </div>
-              <div className="flex h-full w-full  justify-center px-20 py-16">
-                <Editor />
-              </div>
+        <div className="flex min-h-screen flex-col">
+          <div className="h-15  p-4">
+            <Header />
+          </div>
+          <div className="flex h-full flex-grow flex-nowrap items-center justify-between ">
+            <div className="relative left-10 max-w-[20%]">
+              <Calendar />
+            </div>
+            <div className="flex h-full w-full justify-center px-20 py-16">
+              <Editor />
             </div>
           </div>
           <Footer />
-        </Stack>
+        </div>
       </MantineProvider>
     </ColorSchemeProvider>
   );
