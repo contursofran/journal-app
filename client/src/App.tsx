@@ -43,18 +43,18 @@ function App() {
         withNormalizeCSS
       >
         <div className="flex min-h-screen flex-col">
-          <div className="h-15  p-4">
+          <div className="h-14 p-4">
             <Header />
           </div>
-          <div className="flex h-full flex-grow flex-nowrap items-center justify-between ">
-            <div className="relative left-10 max-w-[20%]">
-              <Calendar />
-            </div>
-            <div className="flex h-full w-full justify-center px-20 py-16">
+          <div className="flex h-full flex-grow flex-nowrap items-center justify-between gap-10 p-10 lg:gap-10 lg:p-16">
+            <Calendar />
+            <div className="w-full self-stretch">
               <Editor />
             </div>
           </div>
-          <Footer />
+          <div className="h-14  p-4">
+            <Footer />
+          </div>
         </div>
       </MantineProvider>
     </ColorSchemeProvider>

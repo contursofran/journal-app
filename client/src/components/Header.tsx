@@ -32,7 +32,7 @@ function Header() {
               <Calendar size={iconSize} />
             )}
           </ActionIcon>
-          <Title order={fontSize} className="relative left-1 sm:left-4">
+          <Title order={fontSize} className="relative left-1 sm:left-3">
             {title}
           </Title>
         </Group>

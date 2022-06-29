@@ -7,16 +7,11 @@ function useResponsive() {
   const [fontSize, setFontSize] = useState<TitleOrder>();
   const [size, setSize] = useState<MantineSize>("sm");
 
-  const isMobile = useMediaQuery("(max-width: 600px)");
   const isTablet = useMediaQuery("(min-width: 600px) and (max-width: 1024px)");
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   useEffect(() => {
-    if (isMobile) {
-      setIconSize(20);
-      setFontSize(4);
-      setSize("xs");
-    } else if (isTablet) {
+    if (isTablet) {
       setIconSize(22);
       setFontSize(3);
       setSize("xs");
@@ -25,7 +20,7 @@ function useResponsive() {
       setFontSize(2);
       setSize("sm");
     }
-  }, [isMobile, isTablet, isDesktop]);
+  }, [isTablet, isDesktop]);
 
   return { iconSize, fontSize, size };
 }

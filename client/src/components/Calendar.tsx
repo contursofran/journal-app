@@ -56,7 +56,7 @@ function Calendar() {
   return (
     <Transition mounted={isCalendarOpen} transition="slide-down">
       {(styles) => (
-        <div style={styles}>
+        <div className="max-w-[20%]" style={styles}>
           <CalendarComponent
             size={size}
             id="calendar"

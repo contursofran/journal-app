@@ -29,11 +29,9 @@ function Footer() {
   };
 
   return (
-    <div className="h-10 pr-5 pb-5">
-      <Group className="h-full" align="center" position="right">
-        {statusCase()}
-      </Group>
-    </div>
+    <Group className="h-full" align="center" position="right">
+      {statusCase()}
+    </Group>
   );
 }
 
