@@ -2,34 +2,82 @@ import {
   ActionIcon,
   Menu as MenuComponent,
   ColorSwatch,
-  useMantineTheme,
   Group,
   Divider,
+  useMantineTheme,
 } from "@mantine/core";
+import { useEffect, useState } from "react";
 import { Logout, Settings } from "tabler-icons-react";
-import useStore from "../store/store";
 import { useResponsive } from "../hooks/useResponsive";
+import useStore from "../store/store";
+import { accentColors } from "../utils/constants";
 
 function Menu() {
-  const theme = useMantineTheme();
-  const accentThemes = ["red", "violet", "indigo", "cyan", "yellow"];
   const { iconSize } = useResponsive();
+  const theme = useMantineTheme();
+  const [activeAccentColor, setActiveAccentColor] = useState<string>();
+  const [accentColor, setAccentColor] = useState<string>();
 
-  const setAccentColor = (color: string) => {
-    useStore.setState({ accentColor: color });
-  };
-
-  const swatches = accentThemes.map((color) => (
+  const swatches = accentColors.map((color) => (
     <ColorSwatch
       id={color}
       key={color}
       data-testid={`${color}`}
-      color={theme.colors[color][8]}
-      onClick={() => setAccentColor(theme.colors[color][8])}
+      color={
+        theme.colorScheme === "dark"
+          ? theme.colors[color][8]
+          : theme.colors[color][5]
+      }
+      onClick={() => setActiveAccentColor(color)}
       size={20}
       component="button"
     />
   ));
+
+  useEffect(() => {
+    if (theme.colorScheme === "dark") {
+      switch (activeAccentColor) {
+        case "red":
+          setAccentColor(theme.colors.red[8]);
+          break;
+        case "indigo":
+          setAccentColor(theme.colors.indigo[8]);
+          break;
+        case "cyan":
+          setAccentColor(theme.colors.cyan[8]);
+          break;
+        case "violet":
+          setAccentColor(theme.colors.violet[8]);
+          break;
+        case "yellow":
+          setAccentColor(theme.colors.yellow[8]);
+          break;
+        default:
+          setAccentColor(theme.colors.indigo[8]);
+      }
+    } else {
+      switch (activeAccentColor) {
+        case "red":
+          setAccentColor(theme.colors.red[5]);
+          break;
+        case "indigo":
+          setAccentColor(theme.colors.indigo[5]);
+          break;
+        case "cyan":
+          setAccentColor(theme.colors.cyan[5]);
+          break;
+        case "violet":
+          setAccentColor(theme.colors.violet[5]);
+          break;
+        case "yellow":
+          setAccentColor(theme.colors.yellow[5]);
+          break;
+        default:
+          setAccentColor(theme.colors.indigo[5]);
+      }
+    }
+    useStore.setState({ accentColor });
+  }, [activeAccentColor, theme, accentColor]);
 
   return (
     <MenuComponent
