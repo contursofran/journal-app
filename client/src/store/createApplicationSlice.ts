@@ -6,6 +6,7 @@ const createApplicationSlice: StoreSlice<ApplicationSlice> = (set, get) => ({
   setStatus: (status) => set(() => ({ status })),
   noteModified: false,
   setNoteModified: (noteModified) => set(() => ({ noteModified })),
+  modalOpened: false,
 });
 
 export { createApplicationSlice };

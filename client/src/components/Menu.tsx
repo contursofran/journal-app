@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { Logout, Settings } from "tabler-icons-react";
 import { useResponsive } from "../hooks/useResponsive";
+import { Authentication } from "./Authentication";
 import useStore from "../store/store";
 import { accentColors } from "../utils/constants";
 
@@ -17,6 +18,7 @@ function Menu() {
   const theme = useMantineTheme();
   const [activeAccentColor, setActiveAccentColor] = useState<string>();
   const [accentColor, setAccentColor] = useState<string>();
+  const modalOpened = useStore((state) => state.modalOpened);
 
   const swatches = accentColors.map((color) => (
     <ColorSwatch
@@ -25,8 +27,8 @@ function Menu() {
       data-testid={`${color}`}
       color={
         theme.colorScheme === "dark"
-          ? theme.colors[color][8]
-          : theme.colors[color][5]
+          ? theme.colors[color][7]
+          : theme.colors[color][4]
       }
       onClick={() => setActiveAccentColor(color)}
       size={20}
@@ -95,8 +97,12 @@ function Menu() {
       </Group>
 
       <Divider />
-      <MenuComponent.Item color="red" icon={<Logout size={17} />}>
-        Logout
+      <MenuComponent.Item
+        onClick={() => useStore.setState({ modalOpened: true })}
+        color="red"
+        icon={<Logout size={17} />}
+      >
+        Login
       </MenuComponent.Item>
     </MenuComponent>
   );

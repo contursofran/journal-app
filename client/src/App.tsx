@@ -10,6 +10,7 @@ import Calendar from "./components/Calendar";
 import Editor from "./components/Editor";
 import useStore from "./store/store";
 import { getNotes } from "./services/notesService";
+import { Authentication } from "./components/Authentication";
 
 function App() {
   const setNotes = useStore((state) => state.setNotes);
@@ -46,12 +47,15 @@ function App() {
           <div className="h-14 p-4">
             <Header />
           </div>
+
+          <Authentication />
           <div className="flex h-full flex-grow flex-nowrap items-center justify-between gap-10 p-10 lg:gap-10 lg:p-16">
             <Calendar />
             <div className="w-full self-stretch">
               <Editor />
             </div>
           </div>
+
           <div className="h-14  p-4">
             <Footer />
           </div>
