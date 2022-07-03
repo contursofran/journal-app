@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
 import { useIdle } from "@mantine/hooks";
-import useStore from "../store/store";
-import { updateNote, createNote } from "../services/notesService";
+import { useStore } from "../../store";
+import { updateNote, createNote } from "../../services/notesService";
 
 function Editor() {
   const [editorValue, setEditorValue] = useState("");
@@ -84,4 +84,4 @@ function Editor() {
   );
 }
 
-export default Editor;
+export { Editor };

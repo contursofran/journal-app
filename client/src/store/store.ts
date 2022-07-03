@@ -13,4 +13,4 @@ const useStore = create<StoreState>()(
   }))
 );
 
-export default useStore;
+export { useStore };

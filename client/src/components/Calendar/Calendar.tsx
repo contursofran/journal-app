@@ -1,8 +1,8 @@
 import { Transition, useMantineTheme } from "@mantine/core";
 import { Calendar as CalendarComponent } from "@mantine/dates";
 import { useEffect, useState } from "react";
-import { useResponsive } from "../hooks/useResponsive";
-import useStore from "../store/store";
+import { useResponsive } from "../../hooks/useResponsive";
+import { useStore } from "../../store";
 
 function Calendar() {
   const accentColor = useStore((state) => state.accentColor);
@@ -88,4 +88,4 @@ function Calendar() {
   );
 }
 
-export default Calendar;
+export { Calendar };

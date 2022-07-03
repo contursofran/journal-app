@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Modal, Text } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import useStore from "../store/store";
+import { useStore } from "../../store";
 
-function Authentication() {
+function Login() {
   const modalOpened = useStore((state) => state.modalOpened);
   const [type, toggle] = useToggle("login", ["login", "register"]);
   const form = useForm({
@@ -32,4 +32,4 @@ function Authentication() {
   );
 }
 
-export { Authentication };
+export { Login };

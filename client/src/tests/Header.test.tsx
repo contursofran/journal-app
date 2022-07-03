@@ -2,7 +2,7 @@ import { expect, describe, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ColorSchemeProvider } from "@mantine/core";
-import Header from "../components/Header";
+import { Header } from "../layouts/Header";
 
 describe("Header", () => {
   it("renders", () => {

@@ -8,10 +8,9 @@ import {
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Logout, Settings } from "tabler-icons-react";
-import { useResponsive } from "../hooks/useResponsive";
-import { Authentication } from "./Authentication";
-import useStore from "../store/store";
-import { accentColors } from "../utils/constants";
+import { useResponsive } from "../../hooks/useResponsive";
+import { useStore } from "../../store";
+import { accentColors } from "../../utils/constants";
 
 function Menu() {
   const { iconSize } = useResponsive();
@@ -108,4 +107,4 @@ function Menu() {
   );
 }
 
-export default Menu;
+export { Menu };

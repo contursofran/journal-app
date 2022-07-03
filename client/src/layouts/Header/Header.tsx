@@ -1,8 +1,8 @@
 import { Calendar, Moon, Sun, CalendarOff } from "tabler-icons-react";
 import { ActionIcon, Group, Title, useMantineColorScheme } from "@mantine/core";
-import Menu from "./Menu";
-import useStore from "../store/store";
-import { useResponsive } from "../hooks/useResponsive";
+import { useStore } from "../../store";
+import { useResponsive } from "../../hooks/useResponsive";
+import { Menu } from "../../components/Menu";
 
 function Header() {
   const isCalendarOpen = useStore((state) => state.isCalendarOpen);
@@ -57,4 +57,4 @@ function Header() {
   );
 }
 
-export default Header;
+export { Header };

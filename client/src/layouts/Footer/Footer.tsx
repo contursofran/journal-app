@@ -1,8 +1,8 @@
 import { Group, Loader, Tooltip } from "@mantine/core";
 
 import { Check } from "tabler-icons-react";
-import { useResponsive } from "../hooks/useResponsive";
-import useStore from "../store/store";
+import { useResponsive } from "../../hooks/useResponsive";
+import { useStore } from "../../store";
 
 function Footer() {
   const accentColor = useStore((state) => state.accentColor);
