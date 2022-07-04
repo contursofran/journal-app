@@ -3,9 +3,11 @@ import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
 import { useIdle } from "@mantine/hooks";
 import { useStore } from "../../store";
 import { updateNote, createNote } from "../../services/notesService";
+import { useStyles } from "./Editor.styles";
 
 function Editor() {
   const [editorValue, setEditorValue] = useState("");
+  const { classes } = useStyles();
 
   const calendarValue = useStore((state) => state.calendarValue);
   const notes = useStore((state) => state.notes);
@@ -73,14 +75,16 @@ function Editor() {
   }, [idle, noteModified, notes, calendarValue, editorValue, setStatus]);
 
   return (
-    <RichTextEditor
-      data-testid="Editor"
-      radius="md"
-      className=" h-full w-full "
-      value={editorValue}
-      ref={refEditor}
-      onChange={(text) => handleChange(text)}
-    />
+    <div className={classes.wrapper}>
+      <RichTextEditor
+        data-testid="Editor"
+        radius="md"
+        className={classes.editor}
+        value={editorValue}
+        ref={refEditor}
+        onChange={(text) => handleChange(text)}
+      />
+    </div>
   );
 }
 

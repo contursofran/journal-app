@@ -1,17 +1,27 @@
 import {
   MantineProvider,
   ColorSchemeProvider,
+  MantineThemeOverride,
   ColorScheme,
+  createStyles,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { Calendar } from "./components/Calendar";
-import { Editor } from "./components/Editor";
 import { Footer } from "./layouts/Footer";
 import { Header } from "./layouts/Header";
+import { Main } from "./layouts/Main";
 import { getNotes } from "./services/notesService";
 import { useStore } from "./store";
 
+const useStyles = createStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh",
+  },
+});
+
 function App() {
+  const { classes } = useStyles();
   const setNotes = useStore((state) => state.setNotes);
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
   const toggleColorScheme = () => {
@@ -38,24 +48,16 @@ function App() {
       toggleColorScheme={toggleColorScheme}
     >
       <MantineProvider
-        theme={{ colorScheme }}
+        theme={{
+          colorScheme,
+        }}
         withGlobalStyles
         withNormalizeCSS
       >
-        <div className="flex min-h-screen flex-col">
-          <div className="h-14 p-4">
-            <Header />
-          </div>
-          <div className="flex h-full flex-grow flex-nowrap items-center justify-between gap-10 p-10 lg:gap-10 lg:p-16">
-            <Calendar />
-            <div className="w-full self-stretch">
-              <Editor />
-            </div>
-          </div>
-
-          <div className="h-14  p-4">
-            <Footer />
-          </div>
+        <div className={classes.root}>
+          <Header />
+          <Main />
+          <Footer />
         </div>
       </MantineProvider>
     </ColorSchemeProvider>

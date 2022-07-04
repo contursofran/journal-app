@@ -1,10 +1,12 @@
 import { Calendar, Moon, Sun, CalendarOff } from "tabler-icons-react";
 import { ActionIcon, Group, Title, useMantineColorScheme } from "@mantine/core";
+import { useStyles } from "./Header.styles";
 import { useStore } from "../../store";
 import { useResponsive } from "../../hooks/useResponsive";
 import { Menu } from "../../components/Menu";
 
 function Header() {
+  const { classes } = useStyles();
   const isCalendarOpen = useStore((state) => state.isCalendarOpen);
   const calendarValue = useStore((state) => state.calendarValue);
 
@@ -18,8 +20,8 @@ function Header() {
   };
 
   return (
-    <div data-testid="Header">
-      <Group className="h-full" position="apart" align="center">
+    <div data-testid="Header" className={classes.header}>
+      <div className={classes.inner}>
         <Group position="left" align="center">
           <ActionIcon
             id="calendar-button"
@@ -52,7 +54,7 @@ function Header() {
           </ActionIcon>
           <Menu />
         </Group>
-      </Group>
+      </div>
     </div>
   );
 }

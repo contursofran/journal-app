@@ -1,10 +1,13 @@
 import { Transition, useMantineTheme } from "@mantine/core";
 import { Calendar as CalendarComponent } from "@mantine/dates";
 import { useEffect, useState } from "react";
+import { useStyles } from "./Calendar.styles";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStore } from "../../store";
 
 function Calendar() {
+  const { classes } = useStyles();
+
   const accentColor = useStore((state) => state.accentColor);
   const calendarValue = useStore((state) => state.calendarValue);
   const isCalendarOpen = useStore((state) => state.isCalendarOpen);
@@ -56,9 +59,12 @@ function Calendar() {
   return (
     <Transition mounted={isCalendarOpen} transition="slide-down">
       {(styles) => (
-        <div className="max-w-[20%]" style={styles}>
+        <div className={classes.wrapper} style={styles}>
           <CalendarComponent
             size={size}
+            classNames={{
+              selected: classes.selected,
+            }}
             id="calendar"
             data-testid="calendar"
             fullWidth
@@ -70,16 +76,13 @@ function Calendar() {
                 .map((date) => date.getDate())
                 .includes(calendarDate.getDate())
                 ? {
-                    color: accentColor,
+                    color: accentColor.color,
                     fontWeight: "bold",
                   }
                 : { color: fontColor() }
             }
             styles={() => ({
-              selected: {
-                backgroundColor: `${accentColor} !important`,
-                borderRadius: "14%",
-              },
+              selected: {},
             })}
           />
         </div>
