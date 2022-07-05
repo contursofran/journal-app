@@ -6,11 +6,11 @@ import { useResponsive } from "../../hooks/useResponsive";
 import { Menu } from "../../components/Menu";
 
 function Header() {
-  const { classes } = useStyles();
   const isCalendarOpen = useStore((state) => state.isCalendarOpen);
   const calendarValue = useStore((state) => state.calendarValue);
 
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const { classes } = useStyles();
   const { fontSize, iconSize } = useResponsive();
 
   const title = calendarValue.toDateString().slice(4);
