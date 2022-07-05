@@ -1,9 +1,9 @@
 import {
   MantineProvider,
   ColorSchemeProvider,
-  MantineThemeOverride,
   ColorScheme,
   createStyles,
+  useMantineTheme,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Footer } from "./layouts/Footer";
@@ -21,8 +21,11 @@ const useStyles = createStyles({
 });
 
 function App() {
-  const { classes } = useStyles();
   const setNotes = useStore((state) => state.setNotes);
+  const accentColor = useStore((state) => state.accentColor);
+
+  const { classes } = useStyles();
+
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
   const toggleColorScheme = () => {
     setColorScheme(colorScheme === "dark" ? "light" : "dark");
@@ -41,7 +44,6 @@ function App() {
     };
     fetchNotes();
   }, [setNotes]);
-
   return (
     <ColorSchemeProvider
       colorScheme={colorScheme}
@@ -50,6 +52,8 @@ function App() {
       <MantineProvider
         theme={{
           colorScheme,
+          primaryColor: accentColor,
+          primaryShade: { light: 5, dark: 8 },
         }}
         withGlobalStyles
         withNormalizeCSS

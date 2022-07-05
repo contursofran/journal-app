@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 import { useStyles } from "./Calendar.styles";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStore } from "../../store";
+import { primaryColorShade } from "../../utils";
 
 function Calendar() {
-  const { classes } = useStyles();
-
-  const accentColor = useStore((state) => state.accentColor);
   const calendarValue = useStore((state) => state.calendarValue);
   const isCalendarOpen = useStore((state) => state.isCalendarOpen);
   const notes = useStore((state) => state.notes);
   const setNoteModified = useStore((state) => state.setNoteModified);
 
-  const [dates, setdates] = useState<Date[]>([]);
-  const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
+  const { classes } = useStyles();
   const theme = useMantineTheme();
   const { size } = useResponsive();
+
+  const [dates, setdates] = useState<Date[]>([]);
+  const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
 
   const setCalendarValue = (value: Date) => {
     useStore.setState({ calendarValue: value });
@@ -45,17 +45,6 @@ function Calendar() {
     setCurrentMonthDates(MonthChangeDates);
   };
 
-  const fontColor = () => {
-    switch (theme.colorScheme) {
-      case "light":
-        return "#000";
-      case "dark":
-        return "#fff";
-      default:
-        return "#fff";
-    }
-  };
-
   return (
     <Transition mounted={isCalendarOpen} transition="slide-down">
       {(styles) => (
@@ -76,14 +65,11 @@ function Calendar() {
                 .map((date) => date.getDate())
                 .includes(calendarDate.getDate())
                 ? {
-                    color: accentColor.color,
                     fontWeight: "bold",
+                    color: primaryColorShade(theme),
                   }
-                : { color: fontColor() }
+                : { color: theme.colorScheme === "dark" ? "#fff" : "#000" }
             }
-            styles={() => ({
-              selected: {},
-            })}
           />
         </div>
       )}

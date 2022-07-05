@@ -1,26 +1,26 @@
-import { Group, Loader, Tooltip } from "@mantine/core";
+import { Group, Loader, Tooltip, useMantineTheme } from "@mantine/core";
 
 import { Check } from "tabler-icons-react";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStore } from "../../store";
 
 function Footer() {
-  const accentColor = useStore((state) => state.accentColor);
   const status = useStore((state) => state.status);
   const { size, iconSize } = useResponsive();
+  const theme = useMantineTheme();
 
   const statusCase = () => {
     switch (status) {
       case "saving":
         return (
           <Tooltip label="Saving..." withArrow>
-            <Loader size={size} color={accentColor} />
+            <Loader size={size} color={theme.primaryColor} />
           </Tooltip>
         );
       case "saved":
         return (
           <Tooltip label="Saved" withArrow position="left">
-            <Check size={iconSize} color={accentColor} />
+            <Check size={iconSize} color={theme.primaryColor} />
           </Tooltip>
         );
       default:

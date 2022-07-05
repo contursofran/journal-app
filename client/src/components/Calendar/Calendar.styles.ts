@@ -8,7 +8,7 @@ export const useStyles = createStyles((theme) => ({
   },
 
   selected: {
-    borderRadius: "30%",
-    backgroundColor: `${theme.primaryColor} !important`,
+    borderRadius: "20%",
+    color: "#fff !important",
   },
 }));
