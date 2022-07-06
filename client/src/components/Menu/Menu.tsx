@@ -7,16 +7,19 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { Logout, Settings } from "tabler-icons-react";
+import { Check, Logout, Settings } from "tabler-icons-react";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStore } from "../../store";
 import { getColorName } from "../../utils";
 import { colors } from "../../utils/constants";
+import { useStyles } from "./Menu.styles";
 
 function Menu() {
+  const modalOpened = useStore((state) => state.modalOpened);
+
+  const { classes } = useStyles();
   const { iconSize } = useResponsive();
   const theme = useMantineTheme();
-  const modalOpened = useStore((state) => state.modalOpened);
 
   const setAccentColor = (color: string) => {
     useStore.setState({ accentColor: color });
@@ -24,9 +27,11 @@ function Menu() {
 
   const swatches = colors.map((color) => (
     <ColorSwatch
+      className={classes.swatcher}
+      component="button"
       id={color}
-      key={getColorName(color)}
-      data-testid={`${color}`}
+      key={color}
+      data-testid={color}
       color={
         theme.colorScheme === "dark"
           ? theme.colors[color][8]
@@ -34,7 +39,6 @@ function Menu() {
       }
       onClick={() => setAccentColor(color)}
       size={20}
-      component="button"
     />
   ));
 
@@ -49,7 +53,7 @@ function Menu() {
     >
       <MenuComponent.Label>Accent Color</MenuComponent.Label>
 
-      <Group className="p-2" position="center" align="center">
+      <Group className={classes.swatches} position="center" align="center">
         {swatches}
       </Group>
 
