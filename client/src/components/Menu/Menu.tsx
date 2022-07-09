@@ -7,22 +7,26 @@ import {
 } from "@mantine/core";
 import {
   ChevronDown,
-  Login,
+  Login as LoginIcon,
   Settings as SettingsIcon,
 } from "tabler-icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStyles } from "./Menu.styles";
 import { Settings } from "./Settings";
+import { Login } from "./Login";
 
 function Menu() {
-  const [opened, { open, close }] = useDisclosure(false);
+  const [settings, settingsHandler] = useDisclosure(false);
+  const [login, loginHandler] = useDisclosure(false);
+
   const { classes } = useStyles();
   const { iconSize, size } = useResponsive();
 
   return (
     <>
-      <Settings opened={opened} close={close} />
+      <Settings opened={settings} close={settingsHandler.close} />
+      <Login opened={login} close={loginHandler.close} />
       <MenuComponent
         control={
           <UnstyledButton className={classes.user}>
@@ -36,10 +40,16 @@ function Menu() {
           </UnstyledButton>
         }
       >
-        <MenuComponent.Item icon={<Login size={20} />}>
+        <MenuComponent.Item
+          onClick={loginHandler.open}
+          icon={<LoginIcon size={20} />}
+        >
           Login
         </MenuComponent.Item>
-        <MenuComponent.Item onClick={open} icon={<SettingsIcon size={20} />}>
+        <MenuComponent.Item
+          onClick={settingsHandler.open}
+          icon={<SettingsIcon size={20} />}
+        >
           Settings
         </MenuComponent.Item>
       </MenuComponent>
