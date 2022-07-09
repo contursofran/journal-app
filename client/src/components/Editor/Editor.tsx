@@ -14,6 +14,7 @@ function Editor() {
   const setNoteModified = useStore((state) => state.setNoteModified);
   const noteModified = useStore((state) => state.noteModified);
   const setStatus = useStore((state) => state.setStatus);
+  const editorFontSize = useStore((state) => state.editorFontSize);
 
   const refEditor = useRef<EditorRef>(null);
   const idle = useIdle(2000, { events: ["keypress"] });
@@ -80,6 +81,9 @@ function Editor() {
         data-testid="Editor"
         radius="md"
         className={classes.editor}
+        sx={() => ({
+          fontSize: editorFontSize,
+        })}
         value={editorValue}
         ref={refEditor}
         onChange={(text) => handleChange(text)}

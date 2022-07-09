@@ -33,7 +33,7 @@ export const useStyles = createStyles((theme) => ({
   },
 
   slider: {
-    paddingTop: "20px",
-    paddingBottom: "13px",
+    paddingTop: "22px",
+    paddingBottom: "30px",
   },
 }));

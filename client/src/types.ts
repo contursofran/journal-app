@@ -11,7 +11,7 @@ export type ApplicationSlice = {
   setStatus: (status: string) => void;
   noteModified: boolean;
   setNoteModified: (noteModified: boolean) => void;
-  modalOpened: boolean;
+  editorFontSize: number;
 };
 
 export type NotesSlice = {
