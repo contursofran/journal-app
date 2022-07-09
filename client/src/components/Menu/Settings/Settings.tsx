@@ -1,7 +1,7 @@
-import { Modal, Text, Divider, Group } from "@mantine/core";
-import { useStyles } from "./Menu.styles";
-import { Slider } from "./Slider";
+import { Modal, Text, Group } from "@mantine/core";
 import { Swatches } from "./Swatches";
+import { useStyles } from "./Settings.styles";
+import { Slider } from "./Slider";
 
 function Settings({ opened, close }: { opened: boolean; close: () => void }) {
   const { classes } = useStyles();

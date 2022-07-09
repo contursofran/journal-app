@@ -1,7 +1,7 @@
 import { ColorSwatch, useMantineTheme, Group } from "@mantine/core";
-import { useStore } from "../../store";
-import { useStyles } from "./Menu.styles";
-import { colors } from "../../utils/constants";
+import { useStore } from "../../../store";
+import { colors } from "../../../utils/constants";
+import { useStyles } from "./Settings.styles";
 
 function Swatches() {
   const theme = useMantineTheme();

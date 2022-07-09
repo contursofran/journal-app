@@ -3,7 +3,6 @@ import {
   ColorSchemeProvider,
   ColorScheme,
   createStyles,
-  useMantineTheme,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Footer } from "./layouts/Footer";

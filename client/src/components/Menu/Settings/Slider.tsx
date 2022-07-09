@@ -1,7 +1,6 @@
 import { Slider as SliderComponent } from "@mantine/core";
-import { useState } from "react";
-import { useStyles } from "./Menu.styles";
-import { useStore } from "../../store";
+import { useStore } from "../../../store";
+import { useStyles } from "./Settings.styles";
 
 const MARKS = [
   { value: 16, label: "16px" },

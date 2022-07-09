@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Modal, Text } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { useStore } from "../../store";
+import { useStore } from "../../../store";
 
 function Login() {
-  const modalOpened = useStore((state) => state.modalOpened);
   const [type, toggle] = useToggle("login", ["login", "register"]);
   const form = useForm({
     initialValues: {
@@ -20,11 +19,7 @@ function Login() {
   });
 
   return (
-    <Modal
-      centered
-      opened={modalOpened}
-      onClose={() => useStore.setState({ modalOpened: false })}
-    >
+    <Modal centered opened={false} onClose={() => {}}>
       <Text size="lg" weight={500}>
         Welcome to Mantine
       </Text>
