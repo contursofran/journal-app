@@ -26,7 +26,8 @@ function Header() {
           <ActionIcon
             id="calendar-button"
             onClick={toggleIsCalendarOpen}
-            radius="xl"
+            radius="xs"
+            variant="transparent"
           >
             {isCalendarOpen ? (
               <CalendarOff size={iconSize} />
@@ -39,12 +40,13 @@ function Header() {
           </Title>
         </Group>
 
-        <Group position="right" align="center">
+        <Group position="right" spacing="xs" align="center">
           <ActionIcon
             id="theme-toggle"
+            variant="transparent"
             data-testid="change-theme"
             onClick={() => toggleColorScheme()}
-            radius="xl"
+            radius="xs"
           >
             {colorScheme === "dark" ? (
               <Sun size={iconSize} />
