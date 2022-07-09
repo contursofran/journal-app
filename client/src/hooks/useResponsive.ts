@@ -3,7 +3,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
 function useResponsive() {
-  const [iconSize, setIconSize] = useState<number>();
+  const [iconSize, setIconSize] = useState<number>(25);
   const [fontSize, setFontSize] = useState<TitleOrder>();
   const [size, setSize] = useState<MantineSize>("sm");
 
