@@ -21,12 +21,14 @@ function Slider() {
   return (
     <SliderComponent
       className={classes.slider}
+      classNames={classes}
+      id="font-size-slider"
       label={(val) => MARKS.find((mark) => mark.value === val)?.label}
       defaultValue={editorFontSize}
       step={2}
       min={16}
       max={22}
-      marks={MARKS}
+      size="sm"
       onChange={(val) => setEditorFontSize(val)}
     />
   );

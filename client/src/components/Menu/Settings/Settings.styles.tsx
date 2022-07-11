@@ -19,7 +19,18 @@ export const useStyles = createStyles((theme) => ({
   },
 
   slider: {
-    paddingTop: "22px",
-    paddingBottom: "30px",
+    width: "69%",
+  },
+
+  markLabel: {
+    fontWeight: 550,
+    color: "#7c7c7c",
+  },
+
+  sliderContainer: {
+    height: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 }));
