@@ -2,16 +2,18 @@
   "env": {
     "browser": true,
     "es6": true,
-    "jest": true
+    "jest": true,
+    "cypress/globals": true
   },
   "extends": [
     "plugin:react/recommended",
     "airbnb",
     "airbnb-typescript",
     "prettier",
-    "airbnb/hooks"
+    "airbnb/hooks",
+    "plugin:cypress/recommended"
   ],
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "cypress"],
   "settings": {
     "react": {
       "pragma": "React",
@@ -24,7 +26,8 @@
     "react/react-in-jsx-scope": 0,
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off"
   },
   "parserOptions": {
     "project": "./tsconfig.json"

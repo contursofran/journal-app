@@ -29,7 +29,7 @@ function Menu() {
       <Login opened={login} close={loginHandler.close} />
       <MenuComponent
         control={
-          <UnstyledButton className={classes.user}>
+          <UnstyledButton data-cy="menu" className={classes.user}>
             <Group spacing={7}>
               <Avatar classNames={classes} radius="xl" size={iconSize + 10} />
               <Text weight={500} size={size}>
@@ -43,12 +43,14 @@ function Menu() {
         <MenuComponent.Item
           onClick={loginHandler.open}
           icon={<LoginIcon size={20} />}
+          data-cy="login"
         >
           Login
         </MenuComponent.Item>
         <MenuComponent.Item
           onClick={settingsHandler.open}
           icon={<SettingsIcon size={20} />}
+          data-cy="settings"
         >
           Settings
         </MenuComponent.Item>

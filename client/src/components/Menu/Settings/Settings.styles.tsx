@@ -11,7 +11,10 @@ export const useStyles = createStyles((theme) => ({
   },
 
   text: {
-    color: theme.colors.gray[6],
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.gray[6]
+        : theme.colors.gray[7],
   },
 
   swatches: {
@@ -22,15 +25,10 @@ export const useStyles = createStyles((theme) => ({
     width: "69%",
   },
 
-  markLabel: {
-    fontWeight: 550,
-    color: "#7c7c7c",
-  },
-
-  sliderContainer: {
-    height: "100%",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  labelText: {
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.gray[5]
+        : theme.colors.gray[8],
   },
 }));

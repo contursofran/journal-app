@@ -24,7 +24,7 @@ function Header() {
       <div className={classes.inner}>
         <Group position="left" align="center">
           <ActionIcon
-            id="calendar-button"
+            data-cy="calendar-button"
             onClick={toggleIsCalendarOpen}
             radius="xs"
             variant="transparent"
@@ -42,7 +42,7 @@ function Header() {
 
         <Group position="right" spacing="xs" align="center">
           <ActionIcon
-            id="theme-toggle"
+            data-cy="theme-toggle"
             variant="transparent"
             data-testid="change-theme"
             onClick={() => toggleColorScheme()}

@@ -20,12 +20,19 @@ function Settings({ opened, close }: { opened: boolean; close: () => void }) {
           Accent Color
         </Text>
         <Swatches />
-
         <Text className={classes.text} size="md" weight="500">
           Font Size
         </Text>
       </Group>
-      <Slider />
+      <Group mt="xs" align="center">
+        <Text className={classes.labelText} size="md" weight="500">
+          16px
+        </Text>
+        <Slider />
+        <Text className={classes.labelText} size="md" weight="500">
+          22px
+        </Text>
+      </Group>
     </Modal>
   );
 }

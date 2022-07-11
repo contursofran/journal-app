@@ -15,7 +15,7 @@ function Swatches() {
     <ColorSwatch
       className={classes.swatchesItem}
       component="button"
-      id={color}
+      data-cy={color}
       key={color}
       data-testid={color}
       color={
@@ -24,7 +24,7 @@ function Swatches() {
           : theme.colors[color][5]
       }
       onClick={() => setAccentColor(color)}
-      size={30}
+      size={27}
     />
   ));
 
