@@ -16,6 +16,8 @@
     "@mantine/hooks": "^4.2.9",
     "@mantine/rte": "^4.2.9",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "firebase": "^9.9.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "tabler-icons-react": "^1.48.1",

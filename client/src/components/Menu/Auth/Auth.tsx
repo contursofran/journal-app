@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import {
   Anchor,
   Button,
   Checkbox,
   Group,
+  LoadingOverlay,
   Modal,
   PasswordInput,
   Text,
@@ -12,12 +12,15 @@ import {
 import { upperFirst, useToggle } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { At, Lock, User } from "tabler-icons-react";
-import { useStore } from "../../../store";
-import { useStyles } from "./Login.styles";
+import { useState } from "react";
+import { useStyles } from "./Auth.styles";
+import { register } from "../../../services/authService";
 
-function Login({ opened, close }: { opened: boolean; close: () => void }) {
+function Auth({ opened, close }: { opened: boolean; close: () => void }) {
   const { classes } = useStyles();
 
+  const [formError, setFormError] = useState<string>();
+  const [visible, setVisible] = useState(false);
   const [type, toggle] = useToggle("login", ["login", "register"]);
   const form = useForm({
     initialValues: {
@@ -40,6 +43,31 @@ function Login({ opened, close }: { opened: boolean; close: () => void }) {
     toggle();
   };
 
+  const handleRegister = async () => {
+    setVisible(true);
+    const { values } = form;
+    const res = await register(values, setFormError);
+
+    if (res) {
+      setVisible(false);
+      close();
+      toggle();
+    } else {
+      setVisible(false);
+      switch (formError) {
+        case "Firebase: Error (auth/email-already-in-use).":
+          form.setFieldError("email", "Email already in use");
+          break;
+        case "Firebase: Error (auth/invalid-email).":
+          form.setFieldError("email", "Invalid email");
+          break;
+        default:
+          form.setFieldError("email", "Error");
+          break;
+      }
+    }
+  };
+
   return (
     <Modal
       classNames={classes}
@@ -49,7 +77,12 @@ function Login({ opened, close }: { opened: boolean; close: () => void }) {
       size="sm"
       title={type === "login" ? "Welcome back" : "Register"}
     >
-      <form onSubmit={form.onSubmit(() => {})}>
+      <LoadingOverlay visible={visible} />
+      <form
+        onSubmit={form.onSubmit(() =>
+          type === "login" ? console.log("Login") : handleRegister()
+        )}
+      >
         <Group direction="column" grow>
           {type === "register" && (
             <TextInput
@@ -61,6 +94,7 @@ function Login({ opened, close }: { opened: boolean; close: () => void }) {
                 form.setFieldValue("email", event.currentTarget.value)
               }
               icon={<At size={14} />}
+              error={form.errors.email}
             />
           )}
           <TextInput
@@ -71,7 +105,7 @@ function Login({ opened, close }: { opened: boolean; close: () => void }) {
             onChange={(event) =>
               form.setFieldValue("username", event.currentTarget.value)
             }
-            error={form.errors.email && "Invalid username"}
+            error={form.errors.username && "Invalid username"}
             icon={<User size={14} />}
           />
 
@@ -116,4 +150,4 @@ function Login({ opened, close }: { opened: boolean; close: () => void }) {
   );
 }
 
-export { Login };
+export { Auth };

@@ -16,7 +16,9 @@ const notes = [
   },
   {
     id: 3,
-    date: new Date("2022-06-07"),
+    date: new Date(
+      `${new Date().getFullYear()}-${new Date().getMonth() + 1}-24`
+    ),
     body: "<h1> Test 3</h1> <p>Lorium</p>",
   },
 ];

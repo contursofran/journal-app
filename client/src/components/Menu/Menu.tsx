@@ -14,7 +14,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStyles } from "./Menu.styles";
 import { Settings } from "./Settings";
-import { Login } from "./Login";
+import { Auth } from "./Auth";
 
 function Menu() {
   const [settings, settingsHandler] = useDisclosure(false);
@@ -26,7 +26,7 @@ function Menu() {
   return (
     <>
       <Settings opened={settings} close={settingsHandler.close} />
-      <Login opened={login} close={loginHandler.close} />
+      <Auth opened={login} close={loginHandler.close} />
       <MenuComponent
         control={
           <UnstyledButton data-cy="menu" className={classes.user}>
