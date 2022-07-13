@@ -8,28 +8,20 @@ import {
   PasswordInput,
   Text,
   TextInput,
-  ThemeIcon,
 } from "@mantine/core";
 import { upperFirst, useToggle } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import {
-  AlertCircle,
-  AlertTriangle,
-  At,
-  Check,
-  Lock,
-  User,
-} from "tabler-icons-react";
+import { AlertCircle, At, Check, Lock, User } from "tabler-icons-react";
 import { useState } from "react";
 import { showNotification } from "@mantine/notifications";
 import { useStyles } from "./Auth.styles";
 import { register } from "../../../services/authService";
+import { useStore } from "../../../store";
 
 function Auth({ opened, close }: { opened: boolean; close: () => void }) {
   const { classes } = useStyles();
 
   const [formError, setFormError] = useState<string>();
-  const [popoverError, setPopoverError] = useState(false);
   const [visible, setVisible] = useState(false);
   const [type, toggle] = useToggle("login", ["login", "register"]);
   const form = useForm({
@@ -61,7 +53,16 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
     if (res) {
       setVisible(false);
       close();
-      toggle();
+      showNotification({
+        classNames: {
+          title: classes.notificationSucessTitle,
+          description: classes.notificationSucessBody,
+          icon: classes.notificationSucessIcon,
+        },
+        title: "Registration completed",
+        message: "Your account has been created successfully",
+        icon: <Check />,
+      });
     } else {
       setVisible(false);
       switch (formError) {
@@ -74,24 +75,14 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
         default:
           showNotification({
             classNames: {
-              title: classes.notificationSucessTitle,
-              description: classes.notificationSucessBody,
-              icon: classes.notificationSucessIcon,
+              title: classes.notificationErrorTitle,
+              description: classes.notificationErrorBody,
+              icon: classes.notificationErrorIcon,
             },
-            title: "Registration completed",
-            message: "Your account has been created successfully",
-            icon: <Check />,
+            title: "Something went wrong!",
+            message: "An unknown error has occurred, please try again.",
+            icon: <AlertCircle />,
           });
-          // showNotification({
-          //   classNames: {
-          //     title: classes.notificationErrorTitle,
-          //     description: classes.notificationErrorBody,
-          //     icon: classes.notificationErrorIcon,
-          //   },
-          //   title: "Something went wrong!",
-          //   message: "An unknown error has occurred, please try again.",
-          //   icon: <AlertCircle />,
-          // });
           break;
       }
     }

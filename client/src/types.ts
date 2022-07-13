@@ -12,6 +12,7 @@ export type ApplicationSlice = {
   noteModified: boolean;
   setNoteModified: (noteModified: boolean) => void;
   editorFontSize: number;
+  activeUser: string;
 };
 
 export type NotesSlice = {

@@ -20,7 +20,7 @@ const register = async (
     return response.user;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      setError(new Error("test").message);
+      setError(error.message);
       return null;
     }
     return null;
