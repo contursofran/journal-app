@@ -21,6 +21,7 @@ const register = async (
   } catch (error: unknown) {
     if (error instanceof Error) {
       setError(error.message);
+      // setError(error.message);
       return null;
     }
     return null;

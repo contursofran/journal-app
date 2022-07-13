@@ -6,6 +6,7 @@ import {
   LoadingOverlay,
   Modal,
   PasswordInput,
+  Popover,
   Text,
   TextInput,
 } from "@mantine/core";
@@ -20,6 +21,7 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
   const { classes } = useStyles();
 
   const [formError, setFormError] = useState<string>();
+  const [popoverError, setPopoverError] = useState(false);
   const [visible, setVisible] = useState(false);
   const [type, toggle] = useToggle("login", ["login", "register"]);
   const form = useForm({
@@ -62,7 +64,7 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
           form.setFieldError("email", "Invalid email");
           break;
         default:
-          form.setFieldError("email", "Error");
+          setPopoverError(true);
           break;
       }
     }
@@ -77,6 +79,23 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
       size="sm"
       title={type === "login" ? "Welcome back" : "Register"}
     >
+      <Modal
+        opened={popoverError}
+        onClose={() => setPopoverError(false)}
+        size="xs"
+        title="Error!"
+        classNames={classes}
+        centered
+      >
+        <Group align="center" position="center" direction="column">
+          <Text size="md" weight="600">
+            Unknown error, try again
+          </Text>
+          <Button onClick={() => setPopoverError(false)} variant="subtle">
+            Accept
+          </Button>
+        </Group>
+      </Modal>
       <LoadingOverlay visible={visible} />
       <form
         onSubmit={form.onSubmit(() =>
