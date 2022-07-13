@@ -4,6 +4,7 @@ import {
   ColorScheme,
   createStyles,
 } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import { Footer } from "./layouts/Footer";
 import { Header } from "./layouts/Header";
@@ -57,11 +58,13 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
       >
-        <div className={classes.root}>
-          <Header />
-          <Main />
-          <Footer />
-        </div>
+        <NotificationsProvider position="top-center">
+          <div className={classes.root}>
+            <Header />
+            <Main />
+            <Footer />
+          </div>
+        </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

@@ -6,14 +6,22 @@ import {
   LoadingOverlay,
   Modal,
   PasswordInput,
-  Popover,
   Text,
   TextInput,
+  ThemeIcon,
 } from "@mantine/core";
 import { upperFirst, useToggle } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { At, Lock, User } from "tabler-icons-react";
+import {
+  AlertCircle,
+  AlertTriangle,
+  At,
+  Check,
+  Lock,
+  User,
+} from "tabler-icons-react";
 import { useState } from "react";
+import { showNotification } from "@mantine/notifications";
 import { useStyles } from "./Auth.styles";
 import { register } from "../../../services/authService";
 
@@ -64,7 +72,26 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
           form.setFieldError("email", "Invalid email");
           break;
         default:
-          setPopoverError(true);
+          showNotification({
+            classNames: {
+              title: classes.notificationSucessTitle,
+              description: classes.notificationSucessBody,
+              icon: classes.notificationSucessIcon,
+            },
+            title: "Registration completed",
+            message: "Your account has been created successfully",
+            icon: <Check />,
+          });
+          // showNotification({
+          //   classNames: {
+          //     title: classes.notificationErrorTitle,
+          //     description: classes.notificationErrorBody,
+          //     icon: classes.notificationErrorIcon,
+          //   },
+          //   title: "Something went wrong!",
+          //   message: "An unknown error has occurred, please try again.",
+          //   icon: <AlertCircle />,
+          // });
           break;
       }
     }
@@ -79,23 +106,6 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
       size="sm"
       title={type === "login" ? "Welcome back" : "Register"}
     >
-      <Modal
-        opened={popoverError}
-        onClose={() => setPopoverError(false)}
-        size="xs"
-        title="Error!"
-        classNames={classes}
-        centered
-      >
-        <Group align="center" position="center" direction="column">
-          <Text size="md" weight="600">
-            Unknown error, try again
-          </Text>
-          <Button onClick={() => setPopoverError(false)} variant="subtle">
-            Accept
-          </Button>
-        </Group>
-      </Modal>
       <LoadingOverlay visible={visible} />
       <form
         onSubmit={form.onSubmit(() =>
