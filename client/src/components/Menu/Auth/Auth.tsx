@@ -15,8 +15,9 @@ import { AlertCircle, At, Check, Lock, User } from "tabler-icons-react";
 import { useState } from "react";
 import { showNotification } from "@mantine/notifications";
 import { useStyles } from "./Auth.styles";
-import { register } from "../../../services/authService";
+import { login, register } from "../../../services/authService";
 import { useStore } from "../../../store";
+import { AuthService } from "../../../types";
 
 function Auth({ opened, close }: { opened: boolean; close: () => void }) {
   const { classes } = useStyles();
@@ -26,17 +27,17 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
   const [type, toggle] = useToggle("login", ["login", "register"]);
   const form = useForm({
     initialValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
-      terms: true,
     },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) => (value.length < 8 ? "Invalid password" : null),
-      username: (value) => (value.length < 3 ? "Invalid username" : null),
-      terms: (value) => (value ? null : "You must accept the terms"),
+      password: (value) =>
+        value.length < 7
+          ? "Password should include at least 6 characters"
+          : null,
     },
   });
 
@@ -47,12 +48,14 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
 
   const handleRegister = async () => {
     setVisible(true);
+
     const { values } = form;
     const res = await register(values, setFormError);
 
     if (res) {
       setVisible(false);
       close();
+
       showNotification({
         classNames: {
           title: classes.notificationSucessTitle,
@@ -65,12 +68,69 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
       });
     } else {
       setVisible(false);
+
       switch (formError) {
         case "Firebase: Error (auth/email-already-in-use).":
           form.setFieldError("email", "Email already in use");
           break;
         case "Firebase: Error (auth/invalid-email).":
           form.setFieldError("email", "Invalid email");
+          break;
+        default:
+          showNotification({
+            classNames: {
+              title: classes.notificationErrorTitle,
+              description: classes.notificationErrorBody,
+              icon: classes.notificationErrorIcon,
+            },
+            title: "Something went wrong!",
+            message: "An unknown error has occurred, please try again.",
+            icon: <AlertCircle />,
+          });
+          break;
+      }
+    }
+  };
+
+  const handleLogin = async () => {
+    setVisible(true);
+    const { values } = form;
+
+    const res = await login(values, setFormError);
+
+    if (res) {
+      setVisible(false);
+      close();
+
+      showNotification({
+        classNames: {
+          title: classes.notificationSucessTitle,
+          description: classes.notificationSucessBody,
+          icon: classes.notificationSucessIcon,
+        },
+        title: "Login susccessful",
+        message: "You are now logged in",
+        icon: <Check />,
+      });
+    } else {
+      setVisible(false);
+
+      switch (formError) {
+        case "Firebase: Error (auth/wrong-password).":
+          form.setFieldError("password", "Email or password is invalid");
+          form.setFieldError("email", "Email or password is invalid");
+          break;
+        case "Firebase: Error (auth/user-not-found).":
+          form.setErrors({
+            email: "Email or password is invalid",
+            password: "Email or password is invalid",
+          });
+          break;
+        case "Firebase: Error (auth/invalid-email).":
+          form.setErrors({
+            email: "Email or password is invalid",
+            password: "Email or password is invalid",
+          });
           break;
         default:
           showNotification({
@@ -100,33 +160,32 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
       <LoadingOverlay visible={visible} />
       <form
         onSubmit={form.onSubmit(() =>
-          type === "login" ? console.log("Login") : handleRegister()
+          type === "login" ? handleLogin() : handleRegister()
         )}
       >
         <Group direction="column" grow>
           {type === "register" && (
             <TextInput
-              label="Email"
+              label="Username"
               required
-              placeholder="eg. fran@gmail.com"
-              value={form.values.email}
+              placeholder="Your name"
+              value={form.values.name}
               onChange={(event) =>
-                form.setFieldValue("email", event.currentTarget.value)
+                form.setFieldValue("name", event.currentTarget.value)
               }
-              icon={<At size={14} />}
-              error={form.errors.email}
+              icon={<User size={14} />}
             />
           )}
           <TextInput
-            label="Username"
+            label="Email"
             required
-            placeholder={type === "register" ? "Your username" : "admin"}
-            value={form.values.username}
+            placeholder="eg. fran@gmail.com"
+            value={form.values.email}
             onChange={(event) =>
-              form.setFieldValue("username", event.currentTarget.value)
+              form.setFieldValue("email", event.currentTarget.value)
             }
-            error={form.errors.username && "Invalid username"}
-            icon={<User size={14} />}
+            error={form.errors.email}
+            icon={<At size={14} />}
           />
 
           <PasswordInput
@@ -137,21 +196,9 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
             onChange={(event) =>
               form.setFieldValue("password", event.currentTarget.value)
             }
-            error={
-              form.errors.password &&
-              "Password should include at least 6 characters"
-            }
+            error={form.errors.password}
             icon={<Lock size={14} />}
           />
-          {type === "register" && (
-            <Checkbox
-              label="I accept terms and conditions"
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue("terms", event.currentTarget.checked)
-              }
-            />
-          )}
         </Group>
         <Button fullWidth mt="xl" size="md" type="submit">
           {upperFirst(type)}

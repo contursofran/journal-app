@@ -32,3 +32,9 @@ export interface Note {
   date: Date;
   body: string;
 }
+
+export interface AuthService {
+  email: string;
+  password: string;
+  name: string;
+}

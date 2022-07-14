@@ -44,13 +44,13 @@ function Editor() {
 
     if (refEditor.current?.getEditor().hasFocus()) {
       setNoteModified(true);
+    } else {
+      setNoteModified(false);
     }
   };
-
   useEffect(() => {
     if (idle && noteModified) {
       setStatus("saving");
-
       setTimeout(() => {
         const noteToSave = notes.find(
           (note) =>
@@ -71,9 +71,18 @@ function Editor() {
         }
 
         setStatus("saved");
+        setNoteModified(false);
       }, 3000);
     }
-  }, [idle, noteModified, notes, calendarValue, editorValue, setStatus]);
+  }, [
+    idle,
+    noteModified,
+    notes,
+    calendarValue,
+    editorValue,
+    setStatus,
+    setNoteModified,
+  ]);
 
   return (
     <div className={classes.wrapper}>
