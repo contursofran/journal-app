@@ -18,10 +18,12 @@ import { useStyles } from "./Auth.styles";
 import { login, register } from "../../../services/authService";
 import { useStore } from "../../../store";
 import { AuthService } from "../../../types";
+import { getNotes } from "../../../services/notesService";
 
 function Auth({ opened, close }: { opened: boolean; close: () => void }) {
   const { classes } = useStyles();
 
+  const setNotes = useStore((state) => state.setNotes);
   const [formError, setFormError] = useState<string>();
   const [visible, setVisible] = useState(false);
   const [type, toggle] = useToggle("login", ["login", "register"]);
@@ -101,6 +103,18 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
     if (res) {
       setVisible(false);
       close();
+      const token = await res.getIdToken();
+      const fetchNotes = async () => {
+        const data = await getNotes(token);
+
+        const fixData = data.map((note) => ({
+          ...note,
+          date: new Date(new Date(note.date).getTime() + 86400000), // adds 1 day to the date
+        }));
+
+        setNotes(fixData);
+      };
+      fetchNotes();
 
       showNotification({
         classNames: {

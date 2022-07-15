@@ -31,19 +31,6 @@ function App() {
     setColorScheme(colorScheme === "dark" ? "light" : "dark");
   };
 
-  useEffect(() => {
-    const fetchNotes = async () => {
-      const data = await getNotes();
-
-      const fixData = data.map((note) => ({
-        ...note,
-        date: new Date(new Date(note.date).getTime() + 86400000), // adds 1 day to the date
-      }));
-
-      setNotes(fixData);
-    };
-    fetchNotes();
-  }, [setNotes]);
   return (
     <ColorSchemeProvider
       colorScheme={colorScheme}

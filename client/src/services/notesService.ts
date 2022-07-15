@@ -2,9 +2,13 @@ import axios from "axios";
 import { Note } from "../types";
 import { apiUrl } from "../utils/constants";
 
-const getNotes = async (): Promise<Note[]> => {
+const getNotes = async (token: string): Promise<Note[]> => {
   try {
-    const response = await axios.get(`${apiUrl}/notes`);
+    const response = await axios.get(`${apiUrl}/notes`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
