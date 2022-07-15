@@ -16,6 +16,7 @@ const register = async (
       values.email,
       values.password
     );
+
     return response.user;
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -37,7 +38,7 @@ const login = async (
       values.email,
       values.password
     );
-    console.log(response);
+
     return response.user;
   } catch (error: unknown) {
     if (error instanceof Error) {

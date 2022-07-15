@@ -9,8 +9,7 @@
     "airbnb",
     "airbnb-typescript",
     "prettier",
-    "airbnb/hooks",
-    "plugin:jest/recommended"
+    "airbnb/hooks"
   ],
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "settings": {
@@ -22,7 +21,8 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
-    "react/react-in-jsx-scope": 0
+    "react/react-in-jsx-scope": 0,
+    "eslint/prefer-default-export": false
   },
   "parserOptions": {
     "project": "./tsconfig.json"
