@@ -5,7 +5,7 @@ import {
 } from "@firebase/auth";
 import { AuthService } from "../types";
 
-const register = async (
+const registerUser = async (
   values: AuthService,
   setError: (error: string) => void
 ) => {
@@ -27,7 +27,7 @@ const register = async (
   }
 };
 
-const login = async (
+const loginUser = async (
   values: AuthService,
   setError: (error: string) => void
 ) => {
@@ -49,4 +49,4 @@ const login = async (
   }
 };
 
-export { register, login };
+export { registerUser, loginUser };
