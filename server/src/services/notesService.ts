@@ -1,5 +1,5 @@
-import notes from "../data";
 import { Note } from "types";
+import notes from "../data";
 
 const getNotes = (): Note[] => notes;
 
