@@ -4,7 +4,8 @@ import express from "express";
 import { config } from "./config/config";
 import Logging from "./utils/logging";
 import { decodeToken } from "./utils/middleware";
-import notesRouter from "./routes/note.router";
+import { notesRouter } from "./routes/note.router";
+import { usersRouter } from "./routes/user.router";
 
 const router = express();
 
@@ -23,12 +24,13 @@ const StartServer = () => {
     next();
   });
 
-  router.use(decodeToken);
+  // router.use(decodeToken);
   router.use(cors());
   router.use(express.urlencoded({ extended: true }));
   router.use(express.json());
 
   router.use("/api/notes", notesRouter);
+  router.use("/api/users", usersRouter);
   router.get("/ping", (req, res, next) =>
     res.status(200).json({ hello: "world" })
   );
