@@ -28,4 +28,34 @@ const createNote = async (req: Request, res: Response) => {
   return user;
 };
 
-export { createNote };
+const getNotes = async (req: Request, res: Response) => {
+  const user = await UserModel.findOne({ email: req.body.email });
+
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+
+  const notes = await NoteModel.find({ _id: { $in: user.notes } });
+
+  res.send(notes);
+
+  return user;
+};
+
+const updateNote = async (req: Request, res: Response) => {
+  const note = await NoteModel.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { body: req.body.body } },
+    { new: true }
+  );
+
+  if (!note) {
+    return res.status(404).send("Note not found");
+  }
+
+  res.send(note);
+
+  return note;
+};
+
+export { createNote, getNotes, updateNote };
