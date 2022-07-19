@@ -1,6 +1,6 @@
-import { NotesSlice, StoreSlice } from "../types";
+import { NotesSlice, StoreSlice } from "../common/types";
 
-const createNotesSlice: StoreSlice<NotesSlice> = (set, get) => ({
+const createNotesSlice: StoreSlice<NotesSlice> = (set) => ({
   notes: [],
   setNotes: (notes) => set(() => ({ notes })),
 });

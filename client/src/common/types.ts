@@ -1,4 +1,5 @@
 import { SetState, GetState } from "zustand";
+import { NoteService } from "../services/notesService";
 
 export type CalendarSlice = {
   isCalendarOpen: boolean;
@@ -16,8 +17,8 @@ export type ApplicationSlice = {
 };
 
 export type NotesSlice = {
-  notes: Note[];
-  setNotes: (notes: Note[]) => void;
+  notes: NoteService[];
+  setNotes: (notes: NoteService[]) => void;
 };
 
 export type StoreState = CalendarSlice & ApplicationSlice & NotesSlice;
@@ -26,15 +27,3 @@ export type StoreSlice<T> = (
   set: SetState<StoreState>,
   get: GetState<StoreState>
 ) => T;
-
-export interface Note {
-  id: number;
-  date: Date;
-  body: string;
-}
-
-export interface AuthService {
-  email: string;
-  password: string;
-  name: string;
-}

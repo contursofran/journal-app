@@ -1,6 +1,6 @@
-import { CalendarSlice, StoreSlice } from "../types";
+import { CalendarSlice, StoreSlice } from "../common/types";
 
-const createCalendarSlice: StoreSlice<CalendarSlice> = (set, get) => ({
+const createCalendarSlice: StoreSlice<CalendarSlice> = () => ({
   isCalendarOpen: true,
   calendarValue: new Date(),
 });

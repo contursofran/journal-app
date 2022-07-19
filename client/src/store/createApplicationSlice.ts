@@ -1,6 +1,6 @@
-import { ApplicationSlice, StoreSlice } from "../types";
+import { ApplicationSlice, StoreSlice } from "../common/types";
 
-const createApplicationSlice: StoreSlice<ApplicationSlice> = (set, get) => ({
+const createApplicationSlice: StoreSlice<ApplicationSlice> = (set) => ({
   accentColor: "blue",
   status: "",
   setStatus: (status) => set(() => ({ status })),
