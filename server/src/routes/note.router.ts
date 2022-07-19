@@ -1,4 +1,5 @@
 import express from "express";
+import { validateJoi, Schemas } from "../middleware/joi";
 import {
   createNote,
   getNotes,
@@ -7,10 +8,10 @@ import {
 
 const router = express.Router();
 
-router.post("/", createNote);
+router.post("/", validateJoi(Schemas.note.create), createNote);
 
 router.get("/", getNotes);
 
-router.put("/:id", updateNote);
+router.put("/:id", validateJoi(Schemas.note.update), updateNote);
 
 export { router as notesRouter };
