@@ -5,11 +5,10 @@ import {
   createStyles,
 } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Footer } from "./layouts/Footer";
 import { Header } from "./layouts/Header";
 import { Main } from "./layouts/Main";
-import { getNotes } from "./services/notesService";
 import { useStore } from "./store";
 
 const useStyles = createStyles({
@@ -21,7 +20,6 @@ const useStyles = createStyles({
 });
 
 function App() {
-  const setNotes = useStore((state) => state.setNotes);
   const accentColor = useStore((state) => state.accentColor);
 
   const { classes } = useStyles();

@@ -3,7 +3,14 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "@firebase/auth";
-import { AuthService } from "../types";
+import axios from "axios";
+import { apiUrl } from "../common/constants";
+
+export interface AuthService {
+  email: string;
+  password: string;
+  name: string;
+}
 
 const registerUser = async (
   values: AuthService,

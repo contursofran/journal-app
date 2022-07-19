@@ -1,8 +1,13 @@
 import axios from "axios";
-import { Note } from "../types";
-import { apiUrl } from "../utils/constants";
+import { apiUrl } from "../common/constants";
 
-const getNotes = async (token: string): Promise<Note[]> => {
+export interface NoteService {
+  id: number;
+  date: Date;
+  body: string;
+}
+
+const getNotes = async (token: string): Promise<NoteService[]> => {
   try {
     const response = await axios.get(`${apiUrl}/notes`, {
       headers: {
@@ -16,7 +21,7 @@ const getNotes = async (token: string): Promise<Note[]> => {
   }
 };
 
-const updateNote = async (note: Note): Promise<Note> => {
+const updateNote = async (note: NoteService): Promise<NoteService> => {
   try {
     const response = await axios.put(`${apiUrl}/notes/${note.id}`, note);
     return response.data;
@@ -26,7 +31,7 @@ const updateNote = async (note: Note): Promise<Note> => {
   }
 };
 
-const createNote = async (note: Note): Promise<Note> => {
+const createNote = async (note: NoteService): Promise<NoteService> => {
   try {
     const response = await axios.post(`${apiUrl}/notes`, note);
     return response.data;

@@ -1,6 +1,6 @@
 import Joi, { ObjectSchema } from "joi";
 import { Request, Response, NextFunction } from "express";
-import Logging from "../utils/logger";
+import Logging from "../utils/logging";
 import { Note } from "../models/note.models";
 import { User } from "../models/user.models";
 

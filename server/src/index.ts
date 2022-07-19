@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import express from "express";
 import { config } from "./config/config";
-import Logging from "./utils/logger";
+import Logging from "./utils/logging";
 import { decodeToken } from "./middleware/auth";
 import { notesRouter } from "./routes/note.router";
 import { usersRouter } from "./routes/user.router";
@@ -24,18 +24,16 @@ const StartServer = () => {
     next();
   });
 
-  // router.use(decodeToken);
   router.use(cors());
+  router.use(decodeToken);
   router.use(express.urlencoded({ extended: true }));
   router.use(express.json());
 
   router.use("/api/notes", notesRouter);
   router.use("/api/users", usersRouter);
-  router.get("/ping", (req, res, next) =>
-    res.status(200).json({ hello: "world" })
-  );
+  router.get("/ping", (req, res) => res.status(200).json({ hello: "world" }));
 
-  router.use((req, res, next) => {
+  router.use((req, res) => {
     const error = new Error("Not found");
 
     Logging.error(error);

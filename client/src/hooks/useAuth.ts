@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { UseFormReturnType } from "@mantine/form/lib/use-form";
-import { Check, X } from "tabler-icons-react";
 import { showNotification } from "@mantine/notifications";
-import { loginUser, registerUser } from "../../../services/authService";
-import { getNotes } from "../../../services/notesService";
-import { AuthService } from "../../../types";
-import { useStore } from "../../../store";
+import { AuthService, loginUser, registerUser } from "../services/authService";
+import { getNotes } from "../services/notesService";
+import { useStore } from "../store";
+import { createUser } from "../services/userService";
 
 function useAuth(
   setVisible: (state: boolean) => void,
   close: () => void,
-  form: UseFormReturnType<AuthService>
+  form: UseFormReturnType<AuthService>,
+  icons: { check: JSX.Element; x: JSX.Element }
 ) {
   const setNotes = useStore((state) => state.setNotes);
   const [formError, setFormError] = useState<string>();
@@ -40,7 +40,7 @@ function useAuth(
       showNotification({
         title: "Login completed",
         message: "Your account has been logged in successfully",
-        icon: <Check />,
+        icon: icons.check,
         color: "green",
       });
     } else {
@@ -67,7 +67,7 @@ function useAuth(
           showNotification({
             title: "Login failed",
             message: "Login failed please try again",
-            icon: <X />,
+            icon: icons.x,
             color: "red",
           });
           break;
@@ -81,14 +81,16 @@ function useAuth(
 
     const res = await registerUser(values, setFormError);
 
-    if (res) {
+    const resBackend = await createUser(values, setFormError);
+
+    if (res && resBackend) {
       setVisible(false);
       close();
 
       showNotification({
         title: "Registration completed",
         message: "Your account has been created successfully",
-        icon: <Check />,
+        icon: icons.check,
         color: "green",
       });
     } else {
@@ -105,7 +107,7 @@ function useAuth(
           showNotification({
             title: "Something went wrong!",
             message: "An unknown error has occurred, please try again.",
-            icon: <X />,
+            icon: icons.x,
             color: "red",
           });
           break;

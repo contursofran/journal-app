@@ -10,10 +10,10 @@ import {
 } from "@mantine/core";
 import { upperFirst, useToggle } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { At, Lock, User } from "tabler-icons-react";
+import { At, Check, Lock, User, X } from "tabler-icons-react";
 import { useState } from "react";
 import { useStyles } from "./Auth.styles";
-import { useAuth } from "./useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 
 function Auth({ opened, close }: { opened: boolean; close: () => void }) {
   const { classes } = useStyles();
@@ -36,7 +36,12 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
     },
   });
 
-  const { login, register } = useAuth(setVisible, close, form);
+  const icons = {
+    check: <Check />,
+    x: <X />,
+  };
+
+  const { login, register } = useAuth(setVisible, close, form, icons);
 
   const toggleForm = () => {
     form.reset();
