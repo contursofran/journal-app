@@ -7,6 +7,7 @@ const decodeToken = async (req: any, res: any, next: any) => {
       const token = req.headers.authorization.split(" ")[1];
       const decodedToken = await admin.auth().verifyIdToken(token);
       req.user = decodedToken;
+      console.log(req.user);
       return next();
     }
 

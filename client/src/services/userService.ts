@@ -19,7 +19,7 @@ const createUser = async (
       method: "post",
       url: `${apiUrl}/users`,
       data: {
-        id,
+        _id: id,
         email: values.email,
         name: values.name,
       },

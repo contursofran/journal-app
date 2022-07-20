@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import mongoose from "mongoose";
 import { UserModel } from "../models/user.models";
 
 const createUser = async (req: Request, res: Response) => {
   const user = new UserModel({
-    _id: new mongoose.Types.ObjectId(),
+    // eslint-disable-next-line no-underscore-dangle
+    _id: req.body._id,
     name: req.body.name,
     email: req.body.email,
   });
