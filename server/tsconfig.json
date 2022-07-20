@@ -12,5 +12,6 @@
     "baseUrl": "src",
     "resolveJsonModule": true
   },
-  "include": ["src", "src/types.ts", "src/index.ts", "firebase.ts"]
+  "include": ["src/**/*.ts"],
+  "files": ["src/types.d.ts"]
 }

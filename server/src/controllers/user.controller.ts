@@ -20,9 +20,13 @@ const createUser = async (req: Request, res: Response) => {
 const getUserName = async (req: Request, res: Response) => {
   const { email } = req.params;
   try {
-    const user = await UserModel.findOne({ email });
-    console.log(user);
-    res.send(user);
+    if (email === req.user.email) {
+      const user = await UserModel.findOne({ email });
+
+      res.send(user);
+    } else {
+      res.status(401).send("Unauthorized");
+    }
   } catch (err) {
     res.status(404).send("User not found");
   }
