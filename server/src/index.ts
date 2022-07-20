@@ -11,10 +11,6 @@ const router = express();
 
 const StartServer = () => {
   router.use((req, res, next) => {
-    Logging.info(
-      `Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`
-    );
-
     res.on("finish", () => {
       Logging.info(
         `Result - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - STATUS: [${res.statusCode}]`

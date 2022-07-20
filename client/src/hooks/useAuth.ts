@@ -4,7 +4,7 @@ import { showNotification } from "@mantine/notifications";
 import { AuthService, loginUser, registerUser } from "../services/authService";
 import { getNotes } from "../services/notesService";
 import { useStore } from "../store";
-import { createUser } from "../services/userService";
+import { createUser, getUserName } from "../services/userService";
 
 function useAuth(
   setVisible: (state: boolean) => void,
@@ -20,22 +20,22 @@ function useAuth(
     const { values } = form;
 
     const res = await loginUser(values, setFormError);
+    const username = await getUserName(values.email, setFormError);
+    console.log(username);
 
     if (res) {
       setVisible(false);
       close();
-      const token = await res.getIdToken();
-      const fetchNotes = async () => {
-        const data = await getNotes(token);
+      // const fetchNotes = async () => {
+      //   const data = await getNotes(token);
 
-        const fixData = data.map((note) => ({
-          ...note,
-          date: new Date(new Date(note.date).getTime() + 86400000), // adds 1 day to the date
-        }));
+      //   const fixData = data.map((note) => ({
+      //     ...note,
+      //     date: new Date(new Date(note.date).getTime() + 86400000), // adds 1 day to the date
+      //   }));
 
-        setNotes(fixData);
-      };
-      fetchNotes();
+      //   setNotes(fixData);
+      // };
 
       showNotification({
         title: "Login completed",

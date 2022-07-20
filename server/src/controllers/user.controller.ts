@@ -17,4 +17,15 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-export { createUser };
+const getUserName = async (req: Request, res: Response) => {
+  const { email } = req.params;
+  try {
+    const user = await UserModel.findOne({ email });
+    console.log(user);
+    res.send(user);
+  } catch (err) {
+    res.status(404).send("User not found");
+  }
+};
+
+export { createUser, getUserName };

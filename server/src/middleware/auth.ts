@@ -3,19 +3,17 @@ import { admin } from "../../firebase";
 
 const decodeToken = async (req: any, res: any, next: any) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decodeValue = await await admin.auth().verifyIdToken(token);
-    if (decodeValue) {
+    if (req.headers.authorization) {
+      const token = req.headers.authorization.split(" ")[1];
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      req.user = decodedToken;
       return next();
     }
 
-    return res.status(200).json({
-      message: "Valid token",
-    });
-  } catch (e) {
-    return res.status(401).json({
-      message: "Invalid token",
-    });
+    return res.status(401).send("Unauthorized");
+  } catch (error) {
+    Logging.error(error);
+    return res.status(500).send("Internal server error");
   }
 };
 
