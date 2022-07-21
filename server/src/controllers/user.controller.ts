@@ -3,7 +3,6 @@ import { UserModel } from "../models/user.models";
 
 const createUser = async (req: Request, res: Response) => {
   const user = new UserModel({
-    // eslint-disable-next-line no-underscore-dangle
     _id: req.body._id,
     name: req.body.name,
     email: req.body.email,
@@ -19,13 +18,8 @@ const createUser = async (req: Request, res: Response) => {
 
 const getUserName = async (req: Request, res: Response) => {
   try {
-    if (req.params.uid === req.user.id) {
-      const user = await UserModel.findOne({ _id: req.params.id });
-
-      res.send(user);
-    } else {
-      res.status(401).send("Unauthorized");
-    }
+    const user = await UserModel.findById(req.user.uid);
+    res.send(user);
   } catch (err) {
     res.status(404).send("User not found");
   }

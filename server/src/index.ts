@@ -30,7 +30,7 @@ const StartServer = () => {
   router.get("/ping", (req, res) => res.status(200).json({ hello: "world" }));
 
   router.use((req, res) => {
-    const error = new Error("Not found");
+    const error = new Error("Route not found");
 
     Logging.error(error);
 

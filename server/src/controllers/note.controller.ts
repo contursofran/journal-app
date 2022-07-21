@@ -5,47 +5,41 @@ import { UserModel } from "../models/user.models";
 import { NoteModel } from "../models/note.models";
 
 const createNote = async (req: Request, res: Response) => {
-  if (req.user.uid === req.params.id) {
-    const note = new NoteModel({
-      _id: new mongoose.Types.ObjectId(),
-      body: req.body.body,
-    });
+  const note = new NoteModel({
+    _id: new mongoose.Types.ObjectId(),
+    body: req.body.body,
+  });
 
-    const user = await UserModel.findOne({ email: req.body.email });
+  const user = await UserModel.findById(req.user.uid);
 
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-    user.notes.push(note._id);
-
-    try {
-      await user.save();
-      await note.save();
-      res.send(note);
-    } catch (err) {
-      res.status(500).send(err);
-    }
-
-    return user;
+  if (!user) {
+    return res.status(404).send("User not found");
   }
-  return res.status(401).send("Unauthorized");
+  user.notes.push(note._id);
+
+  try {
+    await user.save();
+    await note.save();
+    res.send(note);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+
+  return user;
 };
 
 const getNotes = async (req: Request, res: Response) => {
-  if (req.user.uid === req.params.id) {
-    const user = await UserModel.findOne({ email: req.params.email });
+  const user = await UserModel.findById(req.user.uid);
 
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-
-    const notes = await NoteModel.find({ _id: { $in: user.notes } });
-
-    res.send(notes);
-
-    return user;
+  if (!user) {
+    return res.status(404).send("User not found");
   }
-  return res.status(401).send("Unauthorized");
+
+  const notes = await NoteModel.find({ _id: { $in: user.notes } });
+
+  res.send(notes);
+
+  return user;
 };
 
 const updateNote = async (req: Request, res: Response) => {
