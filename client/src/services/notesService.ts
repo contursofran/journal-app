@@ -1,3 +1,4 @@
+import { getAuth } from "@firebase/auth";
 import axios from "axios";
 import { apiUrl } from "../common/constants";
 
@@ -7,17 +8,25 @@ export interface NoteService {
   body: string;
 }
 
-const getNotes = async (token: string): Promise<NoteService[]> => {
+const getNotes = async (
+  email: string,
+  setError: (error: string) => void
+): Promise<NoteService[] | null> => {
   try {
-    const response = await axios.get(`${apiUrl}/notes`, {
+    const token = await getAuth().currentUser?.getIdToken();
+
+    const response = await axios.get(`${apiUrl}/notes/${email}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
   } catch (error) {
-    console.log(error);
-    return [];
+    if (error instanceof Error) {
+      setError(error.message);
+      return null;
+    }
+    return null;
   }
 };
 

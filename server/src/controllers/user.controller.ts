@@ -18,10 +18,9 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getUserName = async (req: Request, res: Response) => {
-  const { email } = req.params;
   try {
-    if (email === req.user.email) {
-      const user = await UserModel.findOne({ email });
+    if (req.params.email === req.user.email) {
+      const user = await UserModel.findOne({ email: req.params.email });
 
       res.send(user);
     } else {

@@ -57,7 +57,7 @@ const getUserName = async (
       },
     });
 
-    return response.data;
+    return response.data.name;
   } catch (error) {
     if (error instanceof Error) {
       setError(error.message);

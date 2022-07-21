@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post("/", validateJoi(Schemas.note.create), createNote);
 
-router.get("/", getNotes);
+router.get("/:email", getNotes);
 
 router.put("/:id", validateJoi(Schemas.note.update), updateNote);
 

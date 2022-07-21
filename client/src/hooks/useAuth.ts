@@ -12,7 +12,6 @@ function useAuth(
   form: UseFormReturnType<AuthService>,
   icons: { check: JSX.Element; x: JSX.Element }
 ) {
-  const setNotes = useStore((state) => state.setNotes);
   const [formError, setFormError] = useState<string>();
 
   const login = async () => {
@@ -20,22 +19,16 @@ function useAuth(
     const { values } = form;
 
     const res = await loginUser(values, setFormError);
-    const username = await getUserName(values.email, setFormError);
-    console.log(username);
+    const name = await getUserName(values.email, setFormError);
+    const notes = await getNotes(values.email, setFormError);
 
-    if (res) {
+    if (res && name && notes) {
       setVisible(false);
       close();
-      // const fetchNotes = async () => {
-      //   const data = await getNotes(token);
-
-      //   const fixData = data.map((note) => ({
-      //     ...note,
-      //     date: new Date(new Date(note.date).getTime() + 86400000), // adds 1 day to the date
-      //   }));
-
-      //   setNotes(fixData);
-      // };
+      useStore.setState({
+        activeUser: name,
+        notes,
+      });
 
       showNotification({
         title: "Login completed",

@@ -15,10 +15,12 @@ import { useResponsive } from "../../hooks/useResponsive";
 import { useStyles } from "./Menu.styles";
 import { Settings } from "./Settings";
 import { Auth } from "./Auth";
+import { useStore } from "../../store";
 
 function Menu() {
   const [settings, settingsHandler] = useDisclosure(false);
   const [login, loginHandler] = useDisclosure(false);
+  const activeUser = useStore((state) => state.activeUser);
 
   const { classes } = useStyles();
   const { iconSize, size } = useResponsive();
@@ -33,7 +35,7 @@ function Menu() {
             <Group spacing={7}>
               <Avatar classNames={classes} radius="xl" size={iconSize + 10} />
               <Text weight={500} size={size}>
-                Invited
+                {activeUser}
               </Text>
               <ChevronDown size={12} />
             </Group>
