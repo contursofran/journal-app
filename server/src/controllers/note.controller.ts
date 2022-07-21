@@ -5,7 +5,7 @@ import { UserModel } from "../models/user.models";
 import { NoteModel } from "../models/note.models";
 
 const createNote = async (req: Request, res: Response) => {
-  if (req.user.email === req.body.email) {
+  if (req.user.uid === req.params.id) {
     const note = new NoteModel({
       _id: new mongoose.Types.ObjectId(),
       body: req.body.body,
@@ -32,7 +32,7 @@ const createNote = async (req: Request, res: Response) => {
 };
 
 const getNotes = async (req: Request, res: Response) => {
-  if (req.params.email === req.user.email) {
+  if (req.user.uid === req.params.id) {
     const user = await UserModel.findOne({ email: req.params.email });
 
     if (!user) {
@@ -49,7 +49,7 @@ const getNotes = async (req: Request, res: Response) => {
 };
 
 const updateNote = async (req: Request, res: Response) => {
-  if (req.user.email === req.body.email) {
+  if (req.user.uid === req.params.id) {
     const note = await NoteModel.findOneAndUpdate(
       { _id: req.params.id },
       { $set: { body: req.body.body } },

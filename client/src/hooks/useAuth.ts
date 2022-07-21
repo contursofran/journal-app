@@ -19,7 +19,7 @@ function useAuth(
     const { values } = form;
 
     const res = await loginUser(values, setFormError);
-    const name = await getUserName(values.email, setFormError);
+    const name = await getUserName(setFormError);
     const notes = await getNotes(values.email, setFormError);
 
     if (res && name && notes) {

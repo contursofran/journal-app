@@ -42,16 +42,14 @@ const createUser = async (
   }
 };
 
-const getUserName = async (
-  email: UserService["email"],
-  setError: (error: string) => void
-) => {
+const getUserName = async (setError: (error: string) => void) => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
+    const id = await getAuth().currentUser?.uid;
 
     const response = await axios({
       method: "get",
-      url: `${apiUrl}/users/${email}`,
+      url: `${apiUrl}/users/${id}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

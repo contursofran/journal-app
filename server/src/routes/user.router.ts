@@ -5,6 +5,6 @@ import { createUser, getUserName } from "../controllers/user.controller";
 const router = express.Router();
 
 router.post("/", validateJoi(Schemas.user.create), createUser);
-router.get("/:email", getUserName);
+router.get("/:id", getUserName);
 
 export { router as usersRouter };

@@ -19,8 +19,8 @@ const createUser = async (req: Request, res: Response) => {
 
 const getUserName = async (req: Request, res: Response) => {
   try {
-    if (req.params.email === req.user.email) {
-      const user = await UserModel.findOne({ email: req.params.email });
+    if (req.params.uid === req.user.id) {
+      const user = await UserModel.findOne({ _id: req.params.id });
 
       res.send(user);
     } else {
