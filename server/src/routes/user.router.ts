@@ -1,5 +1,5 @@
 import express from "express";
-import { validateJoi, Schemas } from "../middleware/joi";
+import { validateJoi, Schemas } from "../middleware/validation";
 import { createUser, getUserName } from "../controllers/user.controller";
 
 const router = express.Router();

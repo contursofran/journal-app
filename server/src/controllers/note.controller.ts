@@ -8,6 +8,7 @@ const createNote = async (req: Request, res: Response) => {
   const note = new NoteModel({
     _id: new mongoose.Types.ObjectId(),
     body: req.body.body,
+    createdAt: req.body.createdAt,
   });
 
   const user = await UserModel.findById(req.user.uid);
@@ -43,22 +44,46 @@ const getNotes = async (req: Request, res: Response) => {
 };
 
 const updateNote = async (req: Request, res: Response) => {
-  if (req.user.uid === req.params.id) {
-    const note = await NoteModel.findOneAndUpdate(
-      { _id: req.params.id },
-      { $set: { body: req.body.body } },
-      { new: true }
-    );
+  const user = await UserModel.findById(req.user.uid);
 
-    if (!note) {
-      return res.status(404).send("Note not found");
-    }
-
-    res.send(note);
-
-    return note;
+  if (!user) {
+    return res.status(404).send("User not found");
   }
-  return res.status(401).send("Unauthorized");
+
+  const note = await NoteModel.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { body: req.body.body } },
+    { new: true }
+  );
+
+  if (!note) {
+    return res.status(404).send("Note not found");
+  }
+
+  res.send(note);
+
+  return user;
 };
 
-export { createNote, getNotes, updateNote };
+const deleteNote = async (req: Request, res: Response) => {
+  const user = await UserModel.findById(req.user.uid);
+
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+
+  const note = await NoteModel.findOneAndDelete({ _id: req.params.id });
+
+  if (!note) {
+    return res.status(404).send("Note not found");
+  }
+
+  user.notes.splice(user.notes.indexOf(note._id), 1);
+  await user.save();
+
+  res.send(note);
+
+  return user;
+};
+
+export { createNote, getNotes, updateNote, deleteNote };

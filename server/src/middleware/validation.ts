@@ -20,9 +20,11 @@ const Schemas = {
   note: {
     create: Joi.object<Note>({
       body: Joi.string().required(),
+      createdAt: Joi.date().default(Date.now),
     }),
     update: Joi.object<Note>({
       body: Joi.string().required(),
+      createdAt: Joi.date().default(Date.now),
     }),
   },
   user: {

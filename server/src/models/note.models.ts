@@ -2,12 +2,10 @@ import mongoose, { Document, Schema } from "mongoose";
 
 export interface Note {
   body: string;
+  createdAt: Date;
 }
 
-export interface NoteDocument extends Document, Note {
-  createdAt: Date;
-  updatedAt: Date;
-}
+export interface NoteDocument extends Document, Note {}
 
 const noteSchema = new Schema(
   {
