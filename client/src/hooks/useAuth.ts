@@ -21,12 +21,15 @@ function useAuth(
     const res = await loginUser(values, setFormError);
     const name = await getUserName(setFormError);
     const notes = await getNotes();
-    console.log(notes);
+
     if (res && name && notes) {
       setVisible(false);
       close();
       useStore.setState({
         activeUser: name,
+        activeNoteId: notes.map((note) =>
+          note.createdAt === new Date() ? note._id : null
+        )[0],
         notes,
       });
 

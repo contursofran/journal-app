@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
 import { useIdle } from "@mantine/hooks";
 import { useStore } from "../../store";
-import { updateNote, createNote, getNotes } from "../../services/notesService";
+import { updateNote, createNote } from "../../services/notesService";
 import { useStyles } from "./Editor.styles";
 
 function Editor() {
@@ -16,9 +16,19 @@ function Editor() {
   const setStatus = useStore((state) => state.setStatus);
   const editorFontSize = useStore((state) => state.editorFontSize);
   const activeNoteId = useStore((state) => state.activeNoteId);
-
+  const activeUser = useStore((state) => state.activeUser);
   const refEditor = useRef<EditorRef>(null);
   const idle = useIdle(2000, { events: ["keypress"] });
+
+  const handleChange = (text: string) => {
+    setEditorValue(text);
+
+    if (refEditor.current?.getEditor().hasFocus()) {
+      setNoteModified(true);
+    } else {
+      setNoteModified(false);
+    }
+  };
 
   useEffect(() => {
     const selectedDate = notes.filter(
@@ -40,22 +50,15 @@ function Editor() {
     }
   }, [calendarValue, notes]);
 
-  const handleChange = (text: string) => {
-    setEditorValue(text);
-
-    if (refEditor.current?.getEditor().hasFocus()) {
-      setNoteModified(true);
-    } else {
-      setNoteModified(false);
-    }
-  };
   useEffect(() => {
-    if (idle && noteModified) {
+    if (idle && noteModified && activeUser !== "Guest") {
       setStatus("saving");
       setTimeout(() => {
         if (activeNoteId) {
           updateNote(activeNoteId, editorValue);
+
           const findNote = notes.find((note) => note._id === activeNoteId);
+
           if (findNote) {
             findNote.body = editorValue;
           }
@@ -74,6 +77,7 @@ function Editor() {
     editorValue,
     setNoteModified,
     notes,
+    activeUser,
     setStatus,
     calendarValue,
   ]);

@@ -8,7 +8,7 @@ export interface NoteService {
   createdAt: Date;
 }
 
-const getNotes = async () => {
+const getNotes = async (): Promise<null | NoteService[]> => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
 
@@ -51,7 +51,20 @@ const updateNote = async (_id: string, body: string) => {
 
 const createNote = async (body: string, createdAt: Date) => {
   try {
-    const response = await axios.post(`${apiUrl}/notes`, { body, createdAt });
+    const token = await getAuth().currentUser?.getIdToken();
+    const response = await axios.post(
+      `${apiUrl}/notes`,
+      {
+        body,
+        createdAt: createdAt.setDate(createdAt.getDate() - 1),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
     console.log(error);

@@ -10,7 +10,6 @@ const createNote = async (req: Request, res: Response) => {
     body: req.body.body,
     createdAt: req.body.createdAt,
   });
-
   const user = await UserModel.findById(req.user.uid);
 
   if (!user) {
