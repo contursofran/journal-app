@@ -27,7 +27,8 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
     "import/prefer-default-export": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "no-underscore-dangle": "off"
   },
   "parserOptions": {
     "project": "./tsconfig.json"

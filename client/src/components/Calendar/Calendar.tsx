@@ -19,14 +19,24 @@ function Calendar() {
   const [dates, setdates] = useState<Date[]>([]);
   const [currentMonthDates, setCurrentMonthDates] = useState<Date[]>([]);
 
+  const getNoteId = (date: Date) => {
+    const foundNote = notes.find(
+      (note) =>
+        note.createdAt.getDate() === date.getDate() &&
+        note.createdAt.getMonth() === date.getMonth()
+    );
+    return foundNote ? foundNote._id : null;
+  };
+
   const setCalendarValue = (value: Date) => {
     useStore.setState({ calendarValue: value });
+    useStore.setState({ activeNoteId: getNoteId(value) });
     setNoteModified(false);
   };
 
   useEffect(() => {
     const datesArray = notes
-      .map((note) => new Date(new Date(note.date)))
+      .map((note) => new Date(new Date(note.createdAt)))
       .sort();
 
     const currentMonthDatesArray = datesArray.filter(

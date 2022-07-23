@@ -7,7 +7,7 @@ const createApplicationSlice: StoreSlice<ApplicationSlice> = (set) => ({
   noteModified: false,
   setNoteModified: (noteModified) => set(() => ({ noteModified })),
   editorFontSize: 16,
-  activeUser: "Invited",
+  activeUser: "Guest",
 });
 
 export { createApplicationSlice };

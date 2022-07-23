@@ -13,8 +13,8 @@ router.post("/", validateJoi(Schemas.note.create), createNote);
 
 router.get("/", getNotes);
 
-router.put("/:id", validateJoi(Schemas.note.update), updateNote);
+router.put("/:_id", validateJoi(Schemas.note.update), updateNote);
 
-router.delete("/:id", deleteNote);
+router.delete("/:_id", deleteNote);
 
 export { router as notesRouter };

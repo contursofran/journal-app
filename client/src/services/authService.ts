@@ -3,8 +3,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "@firebase/auth";
-import axios from "axios";
-import { apiUrl } from "../common/constants";
 
 export interface AuthService {
   email: string;

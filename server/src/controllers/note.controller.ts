@@ -51,8 +51,8 @@ const updateNote = async (req: Request, res: Response) => {
   }
 
   const note = await NoteModel.findOneAndUpdate(
-    { _id: req.params.id },
-    { $set: { body: req.body.body } },
+    { _id: req.params._id },
+    { body: req.body.body },
     { new: true }
   );
 

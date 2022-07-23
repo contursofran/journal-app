@@ -18,6 +18,7 @@ export type ApplicationSlice = {
 
 export type NotesSlice = {
   notes: NoteService[];
+  activeNoteId: string | null;
   setNotes: (notes: NoteService[]) => void;
 };
 

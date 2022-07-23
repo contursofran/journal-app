@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
 import { useIdle } from "@mantine/hooks";
 import { useStore } from "../../store";
-import { updateNote, createNote } from "../../services/notesService";
+import { updateNote, createNote, getNotes } from "../../services/notesService";
 import { useStyles } from "./Editor.styles";
 
 function Editor() {
@@ -15,6 +15,7 @@ function Editor() {
   const noteModified = useStore((state) => state.noteModified);
   const setStatus = useStore((state) => state.setStatus);
   const editorFontSize = useStore((state) => state.editorFontSize);
+  const activeNoteId = useStore((state) => state.activeNoteId);
 
   const refEditor = useRef<EditorRef>(null);
   const idle = useIdle(2000, { events: ["keypress"] });
@@ -22,8 +23,8 @@ function Editor() {
   useEffect(() => {
     const selectedDate = notes.filter(
       (note) =>
-        note.date.getDate() === calendarValue.getDate() &&
-        note.date.getMonth() === calendarValue.getMonth()
+        note.createdAt.getDate() === calendarValue.getDate() &&
+        note.createdAt.getMonth() === calendarValue.getMonth()
     );
 
     if (selectedDate.length) {
@@ -52,22 +53,14 @@ function Editor() {
     if (idle && noteModified) {
       setStatus("saving");
       setTimeout(() => {
-        const noteToSave = notes.find(
-          (note) =>
-            note.date.getDate() === calendarValue.getDate() &&
-            note.date.getMonth() === calendarValue.getMonth()
-        );
-
-        const note = {
-          date: noteToSave ? noteToSave.date : calendarValue,
-          body: editorValue,
-          id: noteToSave ? noteToSave.id : notes.length + 1,
-        };
-
-        if (noteToSave) {
-          updateNote(note);
+        if (activeNoteId) {
+          updateNote(activeNoteId, editorValue);
+          const findNote = notes.find((note) => note._id === activeNoteId);
+          if (findNote) {
+            findNote.body = editorValue;
+          }
         } else {
-          createNote(note);
+          createNote(editorValue, calendarValue);
         }
 
         setStatus("saved");
@@ -77,11 +70,12 @@ function Editor() {
   }, [
     idle,
     noteModified,
-    notes,
-    calendarValue,
+    activeNoteId,
     editorValue,
-    setStatus,
     setNoteModified,
+    notes,
+    setStatus,
+    calendarValue,
   ]);
 
   return (

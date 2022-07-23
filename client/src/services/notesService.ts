@@ -3,50 +3,59 @@ import axios from "axios";
 import { apiUrl } from "../common/constants";
 
 export interface NoteService {
-  id: number;
-  date: Date;
+  _id: string;
   body: string;
+  createdAt: Date;
 }
 
-const getNotes = async (
-  email: string,
-  setError: (error: string) => void
-): Promise<NoteService[] | null> => {
+const getNotes = async () => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
 
-    const response = await axios.get(`${apiUrl}/notes/${email}`, {
+    const response = await axios.get(`${apiUrl}/notes/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+
+    const fixNotes = response.data.map((note: NoteService) => ({
+      ...note,
+      createdAt: new Date(new Date(note.createdAt).getTime() + 86400000),
+    }));
+
+    return fixNotes;
   } catch (error) {
-    if (error instanceof Error) {
-      setError(error.message);
-      return null;
-    }
     return null;
   }
 };
 
-const updateNote = async (note: NoteService): Promise<NoteService> => {
+const updateNote = async (_id: string, body: string) => {
   try {
-    const response = await axios.put(`${apiUrl}/notes/${note.id}`, note);
+    const token = await getAuth().currentUser?.getIdToken();
+    const response = await axios.put(
+      `${apiUrl}/notes/${_id}`,
+      { body },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
     console.log(error);
-    return note;
+    return null;
   }
 };
 
-const createNote = async (note: NoteService): Promise<NoteService> => {
+const createNote = async (body: string, createdAt: Date) => {
   try {
-    const response = await axios.post(`${apiUrl}/notes`, note);
+    const response = await axios.post(`${apiUrl}/notes`, { body, createdAt });
     return response.data;
   } catch (error) {
     console.log(error);
-    return note;
+    return null;
   }
 };
 

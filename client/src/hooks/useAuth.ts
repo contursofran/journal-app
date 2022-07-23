@@ -20,8 +20,8 @@ function useAuth(
 
     const res = await loginUser(values, setFormError);
     const name = await getUserName(setFormError);
-    const notes = await getNotes(values.email, setFormError);
-
+    const notes = await getNotes();
+    console.log(notes);
     if (res && name && notes) {
       setVisible(false);
       close();

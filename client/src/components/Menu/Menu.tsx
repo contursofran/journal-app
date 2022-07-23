@@ -43,18 +43,18 @@ function Menu() {
         }
       >
         <MenuComponent.Item
-          onClick={loginHandler.open}
-          icon={<LoginIcon size={20} />}
-          data-cy="login"
-        >
-          Login
-        </MenuComponent.Item>
-        <MenuComponent.Item
           onClick={settingsHandler.open}
           icon={<SettingsIcon size={20} />}
           data-cy="settings"
         >
           Settings
+        </MenuComponent.Item>
+        <MenuComponent.Item
+          onClick={loginHandler.open}
+          icon={<LoginIcon size={20} />}
+          data-cy="login"
+        >
+          {activeUser === "Guest" ? "Login / Register" : "Logout"}
         </MenuComponent.Item>
       </MenuComponent>
     </>
