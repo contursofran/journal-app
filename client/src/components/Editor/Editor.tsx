@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
 import { useIdle } from "@mantine/hooks";
 import { useStore } from "../../store";
-import { updateNote, createNote } from "../../services/notesService";
+import { updateNote, createNote, getNotes } from "../../services/notesService";
 import { useStyles } from "./Editor.styles";
 
 function Editor() {
@@ -63,7 +63,17 @@ function Editor() {
             findNote.body = editorValue;
           }
         } else {
-          createNote(editorValue, calendarValue);
+          createNote(editorValue, calendarValue).then((res) =>
+            res
+              ? notes.push({
+                  _id: res._id,
+                  body: res.body,
+                  createdAt: new Date(
+                    new Date(res.createdAt).getTime() + 86400000
+                  ),
+                })
+              : null
+          );
         }
 
         setStatus("saved");

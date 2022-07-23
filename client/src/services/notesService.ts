@@ -49,14 +49,17 @@ const updateNote = async (_id: string, body: string) => {
   }
 };
 
-const createNote = async (body: string, createdAt: Date) => {
+const createNote = async (
+  body: string,
+  createdAt: Date
+): Promise<NoteService | null> => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
     const response = await axios.post(
       `${apiUrl}/notes`,
       {
         body,
-        createdAt: createdAt.setDate(createdAt.getDate() - 1),
+        createdAt: new Date(createdAt.getTime() - 86400000),
       },
       {
         headers: {
@@ -64,7 +67,6 @@ const createNote = async (body: string, createdAt: Date) => {
         },
       }
     );
-
     return response.data;
   } catch (error) {
     console.log(error);
