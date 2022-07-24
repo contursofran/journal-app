@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { UseFormReturnType } from "@mantine/form/lib/use-form";
 import { showNotification } from "@mantine/notifications";
-import { AuthService, loginUser, registerUser } from "../services/authService";
+import {
+  AuthService,
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "../services/authService";
 import { getNotes } from "../services/notesService";
 import { useStore } from "../store";
 import { createUser, getUserName } from "../services/userService";
@@ -71,6 +76,22 @@ function useAuth(
     }
   };
 
+  const logout = () => {
+    logoutUser();
+
+    useStore.setState({
+      activeUser: "Guest",
+      activeNoteId: null,
+      notes: [],
+    });
+    showNotification({
+      title: "Logout completed",
+      message: "Your account has been logged out successfully",
+      icon: icons.check,
+      color: "green",
+    });
+  };
+
   const register = async () => {
     setVisible(true);
     const { values } = form;
@@ -111,7 +132,7 @@ function useAuth(
     }
   };
 
-  return { login, register };
+  return { login, register, logout };
 }
 
 export { useAuth };

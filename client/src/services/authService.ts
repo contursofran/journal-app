@@ -54,4 +54,16 @@ const loginUser = async (
   }
 };
 
-export { registerUser, loginUser };
+const logoutUser = async () => {
+  try {
+    const auth = getAuth();
+    return await auth.signOut();
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+    return null;
+  }
+};
+
+export { registerUser, loginUser, logoutUser };

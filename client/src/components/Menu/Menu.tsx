@@ -16,6 +16,7 @@ import { useStyles } from "./Menu.styles";
 import { Settings } from "./Settings";
 import { Auth } from "./Auth";
 import { useStore } from "../../store";
+import { logoutUser } from "../../services/authService";
 
 function Menu() {
   const [settings, settingsHandler] = useDisclosure(false);
@@ -24,6 +25,15 @@ function Menu() {
 
   const { classes } = useStyles();
   const { iconSize, size } = useResponsive();
+
+  const logout = () => {
+    useStore.setState({
+      activeUser: "Guest",
+      activeNoteId: null,
+      notes: [],
+    });
+    logoutUser();
+  };
 
   return (
     <>
@@ -50,9 +60,10 @@ function Menu() {
           Settings
         </MenuComponent.Item>
         <MenuComponent.Item
-          onClick={loginHandler.open}
+          onClick={activeUser === "Guest" ? loginHandler.open : logout}
           icon={<LoginIcon size={20} />}
           data-cy="login"
+          color={activeUser === "Guest" ? "" : "red"}
         >
           {activeUser === "Guest" ? "Login / Register" : "Logout"}
         </MenuComponent.Item>
