@@ -76,22 +76,6 @@ function useAuth(
     }
   };
 
-  const logout = () => {
-    logoutUser();
-
-    useStore.setState({
-      activeUser: "Guest",
-      activeNoteId: null,
-      notes: [],
-    });
-    showNotification({
-      title: "Logout completed",
-      message: "Your account has been logged out successfully",
-      icon: icons.check,
-      color: "green",
-    });
-  };
-
   const register = async () => {
     setVisible(true);
     const { values } = form;
@@ -132,7 +116,7 @@ function useAuth(
     }
   };
 
-  return { login, register, logout };
+  return { login, register };
 }
 
 export { useAuth };

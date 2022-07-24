@@ -48,21 +48,29 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
     toggle();
   };
 
+  const handleSubmit = () => {
+    if (type === "login") {
+      login();
+      form.reset();
+    } else {
+      register();
+      form.reset();
+    }
+  };
+
   return (
     <Modal
       classNames={classes}
       centered
       opened={opened}
       onClose={close}
+      closeOnClickOutside={false}
+      withCloseButton={false}
       size="sm"
       title={type === "login" ? "Welcome back" : "Register"}
     >
       <LoadingOverlay visible={visible} />
-      <form
-        onSubmit={form.onSubmit(() =>
-          type === "login" ? login() : register()
-        )}
-      >
+      <form onSubmit={form.onSubmit(() => handleSubmit())}>
         <Group direction="column" grow>
           {type === "register" && (
             <TextInput

@@ -6,11 +6,13 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import {
+  Check,
   ChevronDown,
   Login as LoginIcon,
   Settings as SettingsIcon,
 } from "tabler-icons-react";
 import { useDisclosure } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStyles } from "./Menu.styles";
 import { Settings } from "./Settings";
@@ -20,7 +22,7 @@ import { logoutUser } from "../../services/authService";
 
 function Menu() {
   const [settings, settingsHandler] = useDisclosure(false);
-  const [login, loginHandler] = useDisclosure(false);
+  const [login, loginHandler] = useDisclosure(true);
   const activeUser = useStore((state) => state.activeUser);
 
   const { classes } = useStyles();
@@ -33,6 +35,13 @@ function Menu() {
       notes: [],
     });
     logoutUser();
+    showNotification({
+      title: "Logged out",
+      message: "You have been logged out",
+      icon: <Check />,
+      color: "green",
+    });
+    loginHandler.open();
   };
 
   return (
@@ -60,12 +69,12 @@ function Menu() {
           Settings
         </MenuComponent.Item>
         <MenuComponent.Item
-          onClick={activeUser === "Guest" ? loginHandler.open : logout}
+          onClick={logout}
           icon={<LoginIcon size={20} />}
-          data-cy="login"
-          color={activeUser === "Guest" ? "" : "red"}
+          data-cy="logout"
+          color="red"
         >
-          {activeUser === "Guest" ? "Login / Register" : "Logout"}
+          Logout
         </MenuComponent.Item>
       </MenuComponent>
     </>
