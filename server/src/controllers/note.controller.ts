@@ -71,7 +71,7 @@ const deleteNote = async (req: Request, res: Response) => {
     return res.status(404).send("User not found");
   }
 
-  const note = await NoteModel.findOneAndDelete({ _id: req.params.id });
+  const note = await NoteModel.findOneAndDelete({ _id: req.params._id });
 
   if (!note) {
     return res.status(404).send("Note not found");

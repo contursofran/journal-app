@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
 import { useIdle } from "@mantine/hooks";
 import { useStore } from "../../store";
-import { updateNote, createNote, getNotes } from "../../services/notesService";
+import {
+  updateNote,
+  createNote,
+  getNotes,
+  deleteNote,
+} from "../../services/notesService";
 import { useStyles } from "./Editor.styles";
 
 function Editor() {
@@ -51,16 +56,25 @@ function Editor() {
   }, [calendarValue, notes]);
 
   useEffect(() => {
-    if (idle && noteModified && activeUser !== "Guest") {
+    console.log(editorValue);
+    if (idle && noteModified) {
       setStatus("saving");
       setTimeout(() => {
-        if (activeNoteId) {
+        if (activeNoteId && editorValue !== "<p><br></p>") {
           updateNote(activeNoteId, editorValue);
 
           const findNote = notes.find((note) => note._id === activeNoteId);
 
           if (findNote) {
             findNote.body = editorValue;
+          }
+        } else if (activeNoteId && editorValue) {
+          deleteNote(activeNoteId);
+
+          const findNote = notes.find((note) => note._id === activeNoteId);
+
+          if (findNote) {
+            notes.splice(notes.indexOf(findNote), 1);
           }
         } else {
           createNote(editorValue, calendarValue).then((res) =>

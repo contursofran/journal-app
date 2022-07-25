@@ -74,4 +74,20 @@ const createNote = async (
   }
 };
 
-export { getNotes, updateNote, createNote };
+const deleteNote = async (_id: string) => {
+  try {
+    const token = await getAuth().currentUser?.getIdToken();
+    const response = await axios.delete(`${apiUrl}/notes/${_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export { getNotes, updateNote, createNote, deleteNote };
