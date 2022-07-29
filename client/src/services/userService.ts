@@ -1,16 +1,9 @@
 import axios from "axios";
-import { getAuth } from "@firebase/auth";
-import { apiUrl } from "../common/constants";
+import { getAuth, UserCredential } from "@firebase/auth";
+import { apiUrl } from "../utils/constants";
+import { AuthService } from "../types";
 
-export interface UserService {
-  email: string;
-  name: string;
-}
-
-const createUser = async (
-  values: UserService,
-  setError: (error: string) => void
-) => {
+const createUser = async (values: AuthService) => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
     const id = await getAuth().currentUser?.uid;
@@ -27,24 +20,24 @@ const createUser = async (
         Authorization: `Bearer ${token}`,
       },
     });
-
     return response.data;
-  } catch (error) {
-    const user = getAuth().currentUser;
-    if (user) {
-      user.delete();
-    }
+  } catch (error: unknown) {
     if (error instanceof Error) {
-      setError(error.message);
-      return null;
+      const user = getAuth().currentUser;
+      if (user) {
+        user.delete();
+        return Promise.reject(error);
+      }
     }
     return null;
   }
 };
 
-const getUserName = async (setError: (error: string) => void) => {
+const getUserName = async (
+  data: UserCredential
+): Promise<UserCredential["user"] | null> => {
+  const token = await data.user.getIdToken();
   try {
-    const token = await getAuth().currentUser?.getIdToken();
     const response = await axios({
       method: "get",
       url: `${apiUrl}/users/`,
@@ -56,8 +49,7 @@ const getUserName = async (setError: (error: string) => void) => {
     return response.data.name;
   } catch (error) {
     if (error instanceof Error) {
-      setError(error.message);
-      return null;
+      return Promise.reject(error);
     }
     return null;
   }

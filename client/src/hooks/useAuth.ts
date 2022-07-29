@@ -1,92 +1,29 @@
-import { useState } from "react";
-import { UseFormReturnType } from "@mantine/form/lib/use-form";
 import { showNotification } from "@mantine/notifications";
-import {
-  AuthService,
-  loginUser,
-  logoutUser,
-  registerUser,
-} from "../services/authService";
+import { useState } from "react";
+import { loginUser, registerUser } from "../services/authService";
 import { getNotes } from "../services/notesService";
+import { createUser } from "../services/userService";
 import { useStore } from "../store";
-import { createUser, getUserName } from "../services/userService";
+import { AuthService } from "../types";
+import { icons } from "../utils/icons";
 
-function useAuth(
-  setVisible: (state: boolean) => void,
-  close: () => void,
-  form: UseFormReturnType<AuthService>,
-  icons: { check: JSX.Element; x: JSX.Element }
-) {
-  const [formError, setFormError] = useState<string>();
+function useAuth() {
+  const [errors, setErrors] = useState<unknown>();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const login = async () => {
-    setVisible(true);
-    const { values } = form;
+  const register = async (values: AuthService) => {
+    try {
+      setIsLoading(true);
+      const response = await registerUser(values);
+      const data = await createUser(values);
 
-    const res = await loginUser(values, setFormError);
-    const name = await getUserName(setFormError);
-    const notes = await getNotes();
+      const user = data.name;
 
-    if (res && name && notes) {
-      setVisible(false);
-      close();
       useStore.setState({
-        activeUser: name,
-        activeNoteId: notes.map((note) =>
-          note.createdAt === new Date() ? note._id : null
-        )[0],
-        notes,
+        activeUser: user,
       });
 
-      showNotification({
-        title: "Login completed",
-        message: "Your account has been logged in successfully",
-        icon: icons.check,
-        color: "green",
-      });
-    } else {
-      setVisible(false);
-
-      switch (formError) {
-        case "Firebase: Error (auth/wrong-password).":
-          form.setFieldError("password", "Email or password is invalid");
-          form.setFieldError("email", "Email or password is invalid");
-          break;
-        case "Firebase: Error (auth/user-not-found).":
-          form.setErrors({
-            email: "Email or password is invalid",
-            password: "Email or password is invalid",
-          });
-          break;
-        case "Firebase: Error (auth/invalid-email).":
-          form.setErrors({
-            email: "Email or password is invalid",
-            password: "Email or password is invalid",
-          });
-          break;
-        default:
-          showNotification({
-            title: "Login failed",
-            message: "Login failed please try again",
-            icon: icons.x,
-            color: "red",
-          });
-          break;
-      }
-    }
-  };
-
-  const register = async () => {
-    setVisible(true);
-    const { values } = form;
-
-    const res = await registerUser(values, setFormError);
-
-    const resBackend = await createUser(values, setFormError);
-
-    if (res && resBackend) {
-      setVisible(false);
-      close();
+      setIsLoading(false);
 
       showNotification({
         title: "Registration completed",
@@ -94,29 +31,47 @@ function useAuth(
         icon: icons.check,
         color: "green",
       });
-    } else {
-      setVisible(false);
 
-      switch (formError) {
-        case "Firebase: Error (auth/email-already-in-use).":
-          form.setFieldError("email", "Email already in use");
-          break;
-        case "Firebase: Error (auth/invalid-email).":
-          form.setFieldError("email", "Invalid email");
-          break;
-        default:
-          showNotification({
-            title: "Something went wrong!",
-            message: "An unknown error has occurred, please try again.",
-            icon: icons.x,
-            color: "red",
-          });
-          break;
-      }
+      return response;
+    } catch (error: unknown) {
+      setErrors(error);
+      setIsLoading(false);
+      return null;
     }
   };
 
-  return { login, register };
+  const login = async (values: AuthService) => {
+    try {
+      setIsLoading(true);
+      const user = await loginUser(values);
+      const notes = await getNotes();
+
+      useStore.setState({
+        activeUser: user,
+        activeNoteId: notes.map((note) =>
+          note.createdAt === new Date() ? note._id : null
+        )[0],
+        notes,
+      });
+
+      setIsLoading(false);
+
+      showNotification({
+        title: "Login completed",
+        message: "Your account has been logged in successfully",
+        icon: icons.check,
+        color: "green",
+      });
+
+      return user;
+    } catch (error: unknown) {
+      setErrors(error);
+      setIsLoading(false);
+      return null;
+    }
+  };
+
+  return { login, isLoading, register, errors };
 }
 
 export { useAuth };

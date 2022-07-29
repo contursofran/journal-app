@@ -2,7 +2,7 @@ import { Loader, Tooltip, useMantineTheme } from "@mantine/core";
 import { Check } from "tabler-icons-react";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStore } from "../../store";
-import { primaryColorShade } from "../../common";
+import { primaryColorShade } from "../../utils/mantine";
 import { useStyles } from "./Status.styles";
 
 function Status() {

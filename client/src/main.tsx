@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import "../firebase";
+import "./firebase/config";
 import App from "./App";
 
 const root = ReactDOM.createRoot(

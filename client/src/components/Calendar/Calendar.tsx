@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useStyles } from "./Calendar.styles";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStore } from "../../store";
-import { primaryColorShade } from "../../common";
+import { primaryColorShade } from "../../utils/mantine";
 
 function Calendar() {
   const calendarValue = useStore((state) => state.calendarValue);

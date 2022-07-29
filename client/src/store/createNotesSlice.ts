@@ -1,4 +1,4 @@
-import { NotesSlice, StoreSlice } from "../common/types";
+import { NotesSlice, StoreSlice } from "../types";
 
 const createNotesSlice: StoreSlice<NotesSlice> = (set) => ({
   notes: [],

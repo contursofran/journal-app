@@ -1,6 +1,6 @@
 import { ColorSwatch, useMantineTheme, Group } from "@mantine/core";
 import { useStore } from "../../../store";
-import { colors } from "../../../common/constants";
+import { colors } from "../../../utils/constants";
 import { useStyles } from "./Settings.styles";
 
 function Swatches() {

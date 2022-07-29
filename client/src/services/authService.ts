@@ -2,18 +2,14 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  UserCredential,
 } from "@firebase/auth";
-
-export interface AuthService {
-  email: string;
-  password: string;
-  name: string;
-}
+import { AuthService } from "../types";
+import { getUserName } from "./userService";
 
 const registerUser = async (
-  values: AuthService,
-  setError: (error: string) => void
-) => {
+  values: AuthService
+): Promise<UserCredential | null> => {
   try {
     const auth = getAuth();
     const response = await createUserWithEmailAndPassword(
@@ -22,20 +18,18 @@ const registerUser = async (
       values.password
     );
 
-    return response.user;
+    return response;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      setError(error.message);
-      return null;
+      return Promise.reject(error.message);
     }
     return null;
   }
 };
 
 const loginUser = async (
-  values: AuthService,
-  setError: (error: string) => void
-) => {
+  values: AuthService
+): Promise<UserCredential["user"] | null> => {
   try {
     const auth = getAuth();
     const response = await signInWithEmailAndPassword(
@@ -43,12 +37,12 @@ const loginUser = async (
       values.email,
       values.password
     );
+    const user = await getUserName(response);
 
-    return response.user;
+    return user;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      setError(error.message);
-      return null;
+      return Promise.reject(error.message);
     }
     return null;
   }
@@ -66,4 +60,20 @@ const logoutUser = async () => {
   }
 };
 
-export { registerUser, loginUser, logoutUser };
+const deleteUser = async () => {
+  try {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      await user.delete();
+    }
+    return true;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+    return null;
+  }
+};
+
+export { registerUser, loginUser, logoutUser, deleteUser };

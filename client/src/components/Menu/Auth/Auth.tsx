@@ -8,18 +8,19 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import { upperFirst, useToggle } from "@mantine/hooks";
+import { upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { At, Check, Lock, User, X } from "tabler-icons-react";
+import { At, Lock, User } from "tabler-icons-react";
 import { useState } from "react";
 import { useStyles } from "./Auth.styles";
 import { useAuth } from "../../../hooks/useAuth";
+import { AuthService } from "../../../types";
+import { handleErrors } from "../../../firebase/errors";
 
 function Auth({ opened, close }: { opened: boolean; close: () => void }) {
   const { classes } = useStyles();
 
-  const [visible, setVisible] = useState(false);
-  const [type, toggle] = useToggle("login", ["login", "register"]);
+  const [typeForm, setTypeForm] = useState<"login" | "register">("login");
   const form = useForm({
     initialValues: {
       name: "",
@@ -35,27 +36,37 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
           : null,
     },
   });
+  const { login, isLoading, errors, register } = useAuth();
 
-  const icons = {
-    check: <Check />,
-    x: <X />,
+  const handleSubmit = async (values: AuthService) => {
+    if (typeForm === "login") {
+      const res = await login(values);
+
+      if (res) {
+        close();
+        form.reset();
+      }
+    } else if (typeForm === "register") {
+      await register(values);
+      close();
+      form.reset();
+    }
   };
 
-  const { login, register } = useAuth(setVisible, close, form, icons);
+  const title = () => {
+    switch (typeForm) {
+      case "login":
+        return "Welcome back!";
+      case "register":
+        return "Create an account";
+      default:
+        return "";
+    }
+  };
 
   const toggleForm = () => {
     form.reset();
-    toggle();
-  };
-
-  const handleSubmit = () => {
-    if (type === "login") {
-      login();
-      form.reset();
-    } else {
-      register();
-      form.reset();
-    }
+    setTypeForm((type) => (type === "login" ? "register" : "login"));
   };
 
   return (
@@ -67,12 +78,12 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
       closeOnClickOutside={false}
       withCloseButton={false}
       size="sm"
-      title={type === "login" ? "Welcome back" : "Register"}
+      title={title()}
     >
-      <LoadingOverlay visible={visible} />
-      <form onSubmit={form.onSubmit(() => handleSubmit())}>
+      <LoadingOverlay visible={isLoading} />(
+      <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Group direction="column" grow>
-          {type === "register" && (
+          {typeForm === "register" && (
             <TextInput
               label="Username"
               required
@@ -92,35 +103,44 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
             onChange={(event) =>
               form.setFieldValue("email", event.currentTarget.value)
             }
-            error={form.errors.email}
+            error={
+              form.errors.email
+                ? form.errors.email
+                : handleErrors(errors, typeForm)
+            }
             icon={<At size={14} />}
           />
 
           <PasswordInput
             required
             label="Password"
-            placeholder={type === "register" ? "Your password" : "admin"}
+            placeholder={typeForm === "register" ? "Your password" : "admin"}
             value={form.values.password}
             onChange={(event) =>
               form.setFieldValue("password", event.currentTarget.value)
             }
-            error={form.errors.password}
+            error={
+              form.errors.password
+                ? form.errors.password
+                : handleErrors(errors, typeForm)
+            }
             icon={<Lock size={14} />}
           />
         </Group>
         <Button fullWidth mt="xl" size="md" type="submit">
-          {upperFirst(type)}
+          {upperFirst(typeForm)}
         </Button>
 
         <Text align="center" mt="md">
-          {type === "login"
+          {typeForm === "login"
             ? "Don't have an account? "
             : "Already have an account? "}
           <Anchor<"a"> href="#" weight={700} onClick={() => toggleForm()}>
-            {upperFirst(type === "login" ? "Register" : "Login")}
+            {upperFirst(typeForm === "login" ? "Register" : "Login")}
           </Anchor>
         </Text>
       </form>
+      )
     </Modal>
   );
 }

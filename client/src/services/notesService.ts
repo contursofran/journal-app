@@ -1,6 +1,6 @@
 import { getAuth } from "@firebase/auth";
 import axios from "axios";
-import { apiUrl } from "../common/constants";
+import { apiUrl } from "../utils/constants";
 
 export interface NoteService {
   _id: string;
@@ -8,7 +8,7 @@ export interface NoteService {
   createdAt: Date;
 }
 
-const getNotes = async (): Promise<null | NoteService[]> => {
+const getNotes = async (): Promise<NoteService[]> => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
 
@@ -25,7 +25,7 @@ const getNotes = async (): Promise<null | NoteService[]> => {
 
     return fixNotes;
   } catch (error) {
-    return null;
+    return [];
   }
 };
 

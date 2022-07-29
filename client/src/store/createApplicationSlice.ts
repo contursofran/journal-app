@@ -1,4 +1,4 @@
-import { ApplicationSlice, StoreSlice } from "../common/types";
+import { ApplicationSlice, StoreSlice } from "../types";
 
 const createApplicationSlice: StoreSlice<ApplicationSlice> = (set) => ({
   accentColor: "blue",

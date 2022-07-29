@@ -1,4 +1,4 @@
-import { CalendarSlice, StoreSlice } from "../common/types";
+import { CalendarSlice, StoreSlice } from "../types";
 
 const createCalendarSlice: StoreSlice<CalendarSlice> = () => ({
   isCalendarOpen: true,

@@ -35,7 +35,7 @@ const Schemas = {
         )
         .required(),
       name: Joi.string()
-        .regex(/^[a-z ,.'-]+$/i)
+        .regex(/^[a-zA-Z0-9]+$/)
         .required(),
       _id: Joi.string().required(),
     }),

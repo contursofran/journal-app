@@ -56,7 +56,6 @@ function Editor() {
   }, [calendarValue, notes]);
 
   useEffect(() => {
-    console.log(editorValue);
     if (idle && noteModified) {
       setStatus("saving");
       setTimeout(() => {
