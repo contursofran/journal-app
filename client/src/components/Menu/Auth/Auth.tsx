@@ -80,7 +80,7 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
       size="sm"
       title={title()}
     >
-      <LoadingOverlay visible={isLoading} />(
+      <LoadingOverlay visible={isLoading} />
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Group direction="column" grow>
           {typeForm === "register" && (
@@ -140,7 +140,6 @@ function Auth({ opened, close }: { opened: boolean; close: () => void }) {
           </Anchor>
         </Text>
       </form>
-      )
     </Modal>
   );
 }
