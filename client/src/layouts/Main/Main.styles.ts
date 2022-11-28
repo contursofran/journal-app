@@ -8,4 +8,12 @@ export const useStyles = createStyles(() => ({
     gap: "2.5rem",
     alignItems: "center",
   },
+
+  scrollAreaViewport: {
+    "& > div": {
+      display: "flex !important",
+    },
+    display: "flex",
+    // alignItems: "center",
+  },
 }));

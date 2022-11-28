@@ -1,6 +1,6 @@
 import {
-  getAuth,
   createUserWithEmailAndPassword,
+  getAuth,
   signInWithEmailAndPassword,
   UserCredential,
 } from "@firebase/auth";
@@ -21,6 +21,7 @@ const registerUser = async (
     return response;
   } catch (error: unknown) {
     if (error instanceof Error) {
+      console.log(error.message);
       return Promise.reject(error.message);
     }
     return null;

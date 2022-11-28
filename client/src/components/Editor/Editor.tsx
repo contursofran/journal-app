@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import { RichTextEditor, Editor as EditorRef } from "@mantine/rte";
+import { ScrollArea } from "@mantine/core";
 import { useIdle } from "@mantine/hooks";
-import { useStore } from "../../store";
+import { Editor as EditorRef, RichTextEditor } from "@mantine/rte";
+import { useEffect, useRef, useState } from "react";
 import {
-  updateNote,
   createNote,
-  getNotes,
   deleteNote,
+  getNotes,
+  updateNote,
 } from "../../services/notesService";
+import { useStore } from "../../store";
 import { useStyles } from "./Editor.styles";
 
 function Editor() {
@@ -107,17 +108,22 @@ function Editor() {
 
   return (
     <div className={classes.wrapper}>
-      <RichTextEditor
-        data-testid="Editor"
-        radius="md"
-        className={classes.editor}
-        sx={() => ({
-          fontSize: editorFontSize,
-        })}
-        value={editorValue}
-        ref={refEditor}
-        onChange={(text) => handleChange(text)}
-      />
+      <ScrollArea
+        classNames={{ viewport: classes.scrollAreaViewport }}
+        style={{ height: "calc(100vh - 215px)" }}
+      >
+        <RichTextEditor
+          data-testid="Editor"
+          radius="md"
+          className={classes.editor}
+          sx={() => ({
+            fontSize: editorFontSize,
+          })}
+          value={editorValue}
+          ref={refEditor}
+          onChange={(text) => handleChange(text)}
+        />
+      </ScrollArea>
     </div>
   );
 }

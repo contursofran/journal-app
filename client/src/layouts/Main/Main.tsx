@@ -1,3 +1,4 @@
+import { ScrollArea } from "@mantine/core";
 import { Calendar } from "../../components/Calendar";
 import { Editor } from "../../components/Editor";
 import { useStyles } from "./Main.styles";

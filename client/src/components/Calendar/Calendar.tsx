@@ -1,10 +1,10 @@
 import { Transition, useMantineTheme } from "@mantine/core";
 import { Calendar as CalendarComponent } from "@mantine/dates";
 import { useEffect, useState } from "react";
-import { useStyles } from "./Calendar.styles";
 import { useResponsive } from "../../hooks/useResponsive";
 import { useStore } from "../../store";
 import { primaryColorShade } from "../../utils/mantine";
+import { useStyles } from "./Calendar.styles";
 
 function Calendar() {
   const calendarValue = useStore((state) => state.calendarValue);

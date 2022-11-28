@@ -12,7 +12,7 @@ const createUser = async (req: Request, res: Response) => {
     await user.save();
     res.send(user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(`error!!: ${err}`);
   }
 };
 

@@ -1,8 +1,8 @@
 import {
-  MantineProvider,
-  ColorSchemeProvider,
   ColorScheme,
+  ColorSchemeProvider,
   createStyles,
+  MantineProvider,
 } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import { useState } from "react";

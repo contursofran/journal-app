@@ -9,4 +9,12 @@ export const useStyles = createStyles(() => ({
   editor: {
     height: "100%",
   },
+
+  scrollAreaViewport: {
+    "& > div": {
+      // display: "flex !important",
+      height: "100%",
+    },
+    height: "100%",
+  },
 }));
