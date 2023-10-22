@@ -1,4 +1,5 @@
 import axios from "axios";
+import { apiUrl } from "../utils/constants";
 import { AuthService } from "../types";
 import { getAuth, UserCredential } from "firebase/auth";
 
@@ -9,7 +10,7 @@ const createUser = async (values: AuthService) => {
 
     const response = await axios({
       method: "post",
-      url: `${process.env.API_URL}/users`,
+      url: `${apiUrl}/users`,
       data: {
         _id: id,
         email: values.email,
@@ -39,7 +40,7 @@ const getUserName = async (
   try {
     const response = await axios({
       method: "get",
-      url: `${process.env.API_URL}/users/`,
+      url: `${apiUrl}/users/`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

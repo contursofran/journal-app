@@ -1,4 +1,5 @@
 import axios from "axios";
+import { apiUrl } from "../utils/constants";
 import { getAuth } from "firebase/auth";
 
 export interface NoteService {
@@ -11,7 +12,7 @@ const getNotes = async (): Promise<NoteService[]> => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
 
-    const response = await axios.get(`${process.env.API_URL}/notes/`, {
+    const response = await axios.get(`${apiUrl}/notes/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -32,7 +33,7 @@ const updateNote = async (_id: string, body: string) => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
     const response = await axios.put(
-      `${process.env.API_URL}/notes/${_id}`,
+      `${apiUrl}/notes/${_id}`,
       { body },
       {
         headers: {
@@ -55,7 +56,7 @@ const createNote = async (
   try {
     const token = await getAuth().currentUser?.getIdToken();
     const response = await axios.post(
-      `${process.env.API_URL}/notes`,
+      `${apiUrl}/notes`,
       {
         body,
         createdAt: new Date(createdAt.getTime() - 86400000),
@@ -76,7 +77,7 @@ const createNote = async (
 const deleteNote = async (_id: string) => {
   try {
     const token = await getAuth().currentUser?.getIdToken();
-    const response = await axios.delete(`${process.env.API_URL}/notes/${_id}`, {
+    const response = await axios.delete(`${apiUrl}/notes/${_id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
