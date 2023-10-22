@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose from "mongoose";
 
 export interface User {
   name: string;
@@ -7,7 +7,7 @@ export interface User {
   notes: string[];
 }
 
-export interface UserDocument extends Document, User {
+export interface UserDocument extends mongoose.Document, User {
   _id: string;
 }
 
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   },
   notes: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Note",
     },
   ],
