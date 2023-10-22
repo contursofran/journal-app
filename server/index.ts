@@ -38,13 +38,13 @@ const StartServer = () => {
       message: error.message,
     });
   });
-  router.listen(config.server.port, () => {
+  router.listen(config.server.port, "0.0.0.0", () => {
     console.log(`Server running on port ${config.server.port}`);
   });
 };
 
 mongoose
-  .connect(config.mongo.url, { retryWrites: true, w: "majority" })
+  .connect(config.mongo.url)
   .then(() => {
     Logging.info("Mongo connected successfully.");
     StartServer();

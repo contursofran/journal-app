@@ -1,13 +1,15 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
+
+const { Schema } = mongoose;
 
 export interface Note {
   body: string;
   createdAt: Date;
 }
 
-export interface NoteDocument extends mongoose.Document, Note {}
+export interface NoteDocument extends Document, Note {}
 
-const noteSchema = new mongoose.Schema(
+const noteSchema = new Schema(
   {
     body: {
       type: String,
