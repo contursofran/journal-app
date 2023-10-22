@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import cors from "cors";
 import express from "express";
-import { config } from "./config/config";
-import Logging from "./utils/logging";
-import { decodeToken } from "./middleware/auth";
-import { notesRouter } from "./routes/note.router";
-import { usersRouter } from "./routes/user.router";
+import { config } from "./src/config/config";
+import Logging from "./src/utils/logging";
+import { decodeToken } from "./src/middleware/auth";
+import { notesRouter } from "./src/routes/note.router";
+import { usersRouter } from "./src/routes/user.router";
 
 const router = express();
 
