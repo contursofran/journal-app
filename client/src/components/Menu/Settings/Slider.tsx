@@ -14,7 +14,6 @@ function Slider() {
   return (
     <SliderComponent
       className={classes.slider}
-      classNames={classes}
       data-cy="font-size-slider"
       defaultValue={editorFontSize}
       label={null}

@@ -3,7 +3,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   UserCredential,
-} from "@firebase/auth";
+} from "firebase/auth";
 import { AuthService } from "../types";
 import { getUserName } from "./userService";
 

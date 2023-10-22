@@ -47,7 +47,7 @@ function useAuth() {
       const notes = await getNotes();
 
       useStore.setState({
-        activeUser: user,
+        activeUser: user?.displayName,
         activeNoteId: notes.map((note) =>
           note.createdAt === new Date() ? note._id : null
         )[0],

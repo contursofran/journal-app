@@ -60,3 +60,5 @@ describe("Journal App", () => {
     });
   });
 });
+
+export {};

@@ -1,6 +1,6 @@
 import { SetState, GetState } from "zustand";
-import { UserCredential } from "@firebase/auth";
 import { NoteService } from "../services/notesService";
+import { UserCredential } from "firebase/auth";
 
 export type CalendarSlice = {
   isCalendarOpen: boolean;
@@ -14,7 +14,7 @@ export type ApplicationSlice = {
   noteModified: boolean;
   setNoteModified: (noteModified: boolean) => void;
   editorFontSize: number;
-  activeUser: UserCredential["user"] | null;
+  activeUser: string | null;
 };
 
 export type NotesSlice = {

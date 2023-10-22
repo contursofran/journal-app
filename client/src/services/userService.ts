@@ -1,7 +1,7 @@
 import axios from "axios";
-import { getAuth, UserCredential } from "@firebase/auth";
 import { apiUrl } from "../utils/constants";
 import { AuthService } from "../types";
+import { getAuth, UserCredential } from "firebase/auth";
 
 const createUser = async (values: AuthService) => {
   try {

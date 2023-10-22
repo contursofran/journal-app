@@ -1,6 +1,6 @@
-import { getAuth } from "@firebase/auth";
 import axios from "axios";
 import { apiUrl } from "../utils/constants";
+import { getAuth } from "firebase/auth";
 
 export interface NoteService {
   _id: string;
