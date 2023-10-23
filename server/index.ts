@@ -25,8 +25,8 @@ const StartServer = () => {
   router.use(express.urlencoded({ extended: true }));
   router.use(express.json());
 
-  router.use("/api/notes", notesRouter);
-  router.use("/api/users", usersRouter);
+  router.use("/notes", notesRouter);
+  router.use("/users", usersRouter);
   router.get("/ping", (req, res) => res.status(200).json({ hello: "world" }));
 
   router.use((req, res) => {
