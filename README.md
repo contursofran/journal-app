@@ -12,7 +12,7 @@
 - **React Component Library:** [Mantine](https://mantine.dev/)
 - **User Management:** [Firebase](https://firebase.google.com/)
 - **Database:** [MongoDB](https://www.mongodb.com/)
-- **Deployment:** [Vercel](https://vercel.com/)
+- **Deployment:** [Vercel](https://vercel.com/) & [Render](https://render.com/)
 
 ## Features
 
